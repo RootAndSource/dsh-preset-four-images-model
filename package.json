@@ -1,0 +1,46 @@
+{
+  "name": "dsh-preset-four-images-model",
+  "version": "1.4.3",
+  "description": "四象模型·管理世界 — 主体/环境/地位/行为/才能/心态 六维并行（主体置首）（才能与心态各自独立、不合并）、A诊断+B方案两段式的管理问题分析与方案生成 Preset",
+  "keywords": [
+    "dsh",
+    "dsh-bundle",
+    "agent-preset",
+    "management",
+    "four-images"
+  ],
+  "license": "MIT",
+  "author": "DaiGuobin-CSU <daiguobin@csu.edu.cn>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaiGuobin-CSU/dsh-preset-four-images-model.git"
+  },
+  "type": "module",
+  "engines": {
+    "dsh": ">=0.2.0-rc.2"
+  },
+  "files": [
+    "cordis.patch.yml",
+    "subagents/",
+    "scripts/",
+    "README.md",
+    "INSTALL.md",
+
+    "LICENSE",
+    "MANIFEST.md"
+  ],
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "checksums": "node scripts/checksums.mjs",
+    "pack": "node scripts/pack.mjs",
+    "finalize": "node scripts/finalize.mjs",
+    "sync-roster": "node scripts/sync-roster.mjs",
+    "sync-roster:check": "node scripts/sync-roster.mjs --check"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
