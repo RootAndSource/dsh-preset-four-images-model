@@ -1,0 +1,4 @@
+# 强制以 LF 存入库：本包多个文件（SHA256SUMS.txt / FREEZE.md / *.yaml）按字节哈希校验收敛，
+# 若被 git 转成 CRLF 会导致哈希与校验失败。
+* text=auto eol=lf
+*.tgz binary
