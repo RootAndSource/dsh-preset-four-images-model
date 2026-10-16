@@ -1,0 +1,8 @@
+# 四象模型·管理世界 · 打包产物校验
+# 说明：本文件不含生成时间戳——内容确定的产物清单才可复现，重跑本脚本不会产生无意义差异。
+
+26CFC7060CF7280202710A9A00FBD3260C7385663017AF6F2DA6E364978626A6     59732  dsh-preset-four-images-model-1.4.3.tgz
+
+# 核对（PowerShell）：
+#   Get-FileHash .\artifacts\<文件名>.tgz -Algorithm SHA256
+# 哈希不一致就不要安装。
