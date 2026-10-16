@@ -1,0 +1,51 @@
+# 冻结清单 · dsh-preset-four-images-model 1.4.3
+
+> **状态：FROZEN（冻结发布态）**。本清单由 `tools/freeze-manifest.fixed.mjs` 依据磁盘实际内容生成；
+> 冻结生效后**包内任何文件不得修改**。确需调整必须递增 `version` 并重跑打包与全量校验流程。
+
+## 一、分发产物（唯一）
+
+| 项 | 值 |
+|---|---|
+| 文件名 | `dsh-preset-four-images-model-1.4.3.tgz` |
+| 字节大小 | 59732 |
+| SHA-256 | `26CFC7060CF7280202710A9A00FBD3260C7385663017AF6F2DA6E364978626A6` |
+| 所在目录 | `<本包>/artifacts/` |
+| 产物清单 | `artifacts/SHA256SUMS.txt` |
+
+## 二、冻结文件清单（源文件口径）
+
+合计 **22 个文件 / 170841 字节**。口径 = 包内全部文件 − `artifacts/` − `SHA256SUMS.txt` − `FREEZE.md`；与 `SHA256SUMS.txt` 逐条对应，且等于 tgz 归档条目数。
+交叉校验：与 SHA256SUMS.txt 完全一致（22 条）
+
+| # | 文件 | 字节 | SHA-256 |
+|---|---|---|---|
+| 1 | `INSTALL.md` | 8705 | `7196C7A04ED94B2E15DC4528B35CBD1841ABCB54D7884D0BFFE5EC4FC1C59BD7` |
+| 2 | `LICENSE` | 1070 | `60AD16BFBEDC503E7EEF6362ADBF04C42F1DECBACA4249DC4FFC8187062EAF3C` |
+| 3 | `MANIFEST.md` | 56693 | `31C39B00ECECE15496CD7CBE6345446281335A66357FCB2E49317C541368E7A0` |
+| 4 | `README.md` | 6135 | `D5615A780A03D79A90FEE6912738F1D844298C1158D37FD30C36EF293D2D5E53` |
+| 5 | `cordis.patch.yml` | 14808 | `11ECB67C3EBEE372B46BB4F262E3204B808F3C7DCF2E0D1537B8D1683A09466F` |
+| 6 | `package.json` | 1223 | `3B36738E0B271473A7F2B1F4912DE90F592A6F44F368B5EC7E4BEB3DCFE6BEFA` |
+| 7 | `scripts/check.mjs` | 22218 | `1A0E4782C818A724896BDFDBBD8DC66D89E3618CA5C3C322FB4A9742C41AC65B` |
+| 8 | `scripts/checksums.mjs` | 2729 | `F6A51755C1EA01F30A4499578987259C9F3F56E3D641BFE7F9EEDEF4B6A3068D` |
+| 9 | `scripts/finalize.mjs` | 1970 | `25B0B9DCDA4D6F200B5EF237F10C3C6DEF5BCE6051B3B7F9695146195BDC56A2` |
+| 10 | `scripts/freeze-manifest.mjs` | 5745 | `9A5903C54856511B8035297EC7B5BBC3C6C0882C3F8AD9F720075DF559A5B683` |
+| 11 | `scripts/pack.mjs` | 3496 | `52BF0DD6B4D754DC6377C3EDDDEBE49B03CE653F572AF367F574F0E6779DB55B` |
+| 12 | `scripts/sync-roster.mjs` | 6977 | `710AF6164CFAA9B674A3BC3BBB3AD512068F7F1E51ECD416C5F7CA87F9B1BAAB` |
+| 13 | `subagents/four-images-beh-a.yaml` | 3994 | `D7D27592E76CD7A6FBCEBE065667DA7942DC5A5CD821C07AAE66759CD34025BA` |
+| 14 | `subagents/four-images-beh-b.yaml` | 2962 | `F4868E1E39297BF009D651B3E4EC20473AA7E7A116E9B050FD4913D0DDBB9BDC` |
+| 15 | `subagents/four-images-cog-a.yaml` | 3738 | `B19C717E0C79CEB90D7B643BC682AD24029DF414E481653657FA42F3186E0786` |
+| 16 | `subagents/four-images-cog-b.yaml` | 3283 | `6F9ADFF263B615E59F93A1AB28E3CF35D9FF9B42ECED64372E7B1C1FAD998E9F` |
+| 17 | `subagents/four-images-environment.yaml` | 3236 | `1718D48B3A828C28382DE7C1CECE76ED4260AF3CCAB502C8685D9A4523BB40C1` |
+| 18 | `subagents/four-images-pos-a.yaml` | 3911 | `4C72631881900F953210A2212CE8ADAE3CA53912047E131515E818D4563CB361` |
+| 19 | `subagents/four-images-pos-b.yaml` | 2876 | `0DE8D65262122B604FC38A7EC10A907014114777F92A0BD4ED4D117764E2B373` |
+| 20 | `subagents/four-images-subject.yaml` | 8376 | `03CDF05B3AFC2C8342D59E2DA90BCA3FC79B3B43A269143CC6969417BBCC8457` |
+| 21 | `subagents/four-images-tal-a.yaml` | 3503 | `BF43F76580DE6EFC9311ABE5564B2D6544B33A1EB4666C1EE71FFB758BFA8279` |
+| 22 | `subagents/four-images-tal-b.yaml` | 3193 | `33700F276C0823BC8763E1F4E2C2AA4045B43E6BF1C68CC196BE76A21DE5CDB3` |
+
+## 三、冻结后纪律
+
+1. 对外分发只用 `artifacts/` 下的 tgz，安装前用 `Get-FileHash` 核对上表 SHA-256；
+2. 如需改动：**递增 `version`** → 重跑 `checksums → pack → finalize` → 重跑 `check.mjs` 与 `tools/release-verify.mjs` → 用本脚本重生成 FREEZE.md；
+3. 禁止"同版本号原地改内容再打包"：pnpm 会判 `Already up to date`，装机副本不会更新；
+4. 名册条目 id 与上游版本相同：升级后**必须**执行 `node scripts/sync-roster.mjs`。
