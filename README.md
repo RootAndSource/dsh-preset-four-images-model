@@ -11,7 +11,7 @@
 因此，管理学的丛林及其后续，不应只被看作学术部落化或管理时尚化，而是可被重新理解为：**多范式理论等待一个底层操作系统**。以《四象模型》为底层框架，以Deepseek Harness“一切皆插件”为AI Native支撑，各学派不必相互取代，而能成为 **可解构、可建构、可插拔、可组合模块**，在真实管理问题中实现对话、整合与应用。
 
 <p align="center">
-  <img width="400" height="222" alt="四象模型-新" src="https://github.com/user-attachments/assets/7e0f4aa9-e170-4be9-b852-3d75e3ea2981" />
+  <img width="400" height="222" alt="四象模型-新" src="assets\images\four-images-model-new.png">
 </p>
 
 具体地，四象模型把管理问题拆成 **主体 / 环境 / 地位 / 行为 / 才能 / 心态** 六个维度，逐维独立诊断、独立出方案，最后汇总成一份带优先级的行动清单。
