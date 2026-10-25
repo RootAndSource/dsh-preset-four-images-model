@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve, relative, sep } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP = new Set(['node_modules', '.git', 'artifacts']);
+const SKIP = new Set(['node_modules', '.git', 'artifacts', 'release-archive']);
 const sha = (b) => createHash('sha256').update(b).digest('hex').toUpperCase();
 const shaFile = (p) => sha(readFileSync(p));
 
@@ -23,7 +23,11 @@ function walk(dir, acc = []) {
 }
 
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
-const files = walk(root).filter((f) => f !== 'FREEZE.md').sort();
+const SELF_REFERENTIAL = new Set(['FREEZE.md', 'SHA256SUMS.txt']);
+const files = walk(root)
+  .filter((f) => !SELF_REFERENTIAL.has(f))
+  .filter((f) => !f.split('/').some((seg) => seg.startsWith('.')))
+  .sort();
 const rows = files.map((f) => {
   const b = readFileSync(join(root, f));
   return { f, size: b.length, sha: sha(b) };
@@ -44,6 +48,7 @@ const STALE = [
 let bom = 0; let crlf = 0; let repl = 0; let stale = 0;
 for (const r of rows) {
   const b = readFileSync(join(root, r.f));
+  if (b.includes(0)) continue;
   if (b.length >= 3 && b[0] === 0xEF && b[1] === 0xBB && b[2] === 0xBF) bom += 1;
   const t = b.toString('utf8');
   if (t.includes('\r\n')) crlf += 1;
@@ -52,7 +57,7 @@ for (const r of rows) {
 }
 
 const lines = [];
-lines.push('# 冻结清单 · dsh-preset-four-images-model 1.4.0');
+lines.push(`# 冻结清单 · ${pkg.name} ${pkg.version}`);
 lines.push('');
 lines.push('> **状态：FROZEN（冻结发布态）**。本清单由 `scripts/freeze-manifest.mjs` 依据磁盘实际内容生成；');
 lines.push('> 冻结生效后**包内任何文件不得修改**。确需调整必须递增 `version` 并重跑打包与全量校验流程。');

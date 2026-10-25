@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 四象模型·管理世界 bundle · 活名册同步
+ * 四象模型·DSH智能体 bundle · 活名册同步
  *
  * 用法：
  *   node scripts/sync-roster.mjs                # 把本 bundle 的条目同步到活名册目录
@@ -64,7 +64,7 @@ if (srcFiles.length === 0) {
   process.exit(1);
 }
 
-console.log(`四象模型·管理世界 · 活名册同步${checkOnly ? '（--check 预览模式，不写文件）' : ''}`);
+console.log(`四象模型·DSH智能体 · 活名册同步${checkOnly ? '（--check 预览模式，不写文件）' : ''}`);
 console.log(`  源  ：${srcDir}`);
 console.log(`  目标：${targetDir}`);
 console.log(`  条目：${srcFiles.length} 个（仅处理前缀 ${PREFIX}*）\n`);

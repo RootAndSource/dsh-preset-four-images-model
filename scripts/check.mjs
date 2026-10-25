@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 四象模型·管理世界 bundle · 结构校验（名册派发版）
+ * 四象模型·DSH智能体 bundle · 结构校验（名册派发版）
  * 用法：node scripts/check.mjs
  * 仅使用 Node 内置模块，无第三方依赖。
  *
@@ -155,7 +155,7 @@ function extractContract(text) {
   }
 }
 
-console.log(`四象模型·管理世界 bundle（${JSON.parse(read('package.json')).version}）校验（名册派发版） · 根目录 ${root}\n`);
+console.log(`四象模型·DSH智能体 bundle（${JSON.parse(read('package.json')).version}）校验（名册派发版） · 根目录 ${root}\n`);
 
 // ---------- A. 必需文件 ----------
 for (const f of REQUIRED) (isFile(f) ? ok(`存在 ${f}`) : bad(`缺失 ${f}`));

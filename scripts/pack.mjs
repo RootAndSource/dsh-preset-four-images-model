@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 四象模型·管理世界 bundle · 打包为 tgz
+ * 四象模型·DSH智能体 bundle · 打包为 tgz
  * 用法：node scripts/pack.mjs
  * 输出：dist-share/artifacts/dsh-preset-four-images-model-<version>.tgz
  *
@@ -21,7 +21,7 @@ const outDir = join(root, 'artifacts');
 const outFile = join(outDir, `${pkg.name}-${pkg.version}.tgz`);
 
 const INCLUDE_TOP = ['package.json', 'cordis.patch.yml', 'README.md', 'INSTALL.md', 'MANIFEST.md', 'LICENSE'];
-const INCLUDE_DIRS = ['subagents', 'scripts'];
+const INCLUDE_DIRS = ['subagents', 'scripts', 'assets'];
 
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {

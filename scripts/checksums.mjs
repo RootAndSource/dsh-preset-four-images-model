@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 四象模型·管理世界 bundle · 逐文件 SHA256 清单
+ * 四象模型·DSH智能体 bundle · 逐文件 SHA256 清单
  * 用法：node scripts/checksums.mjs
  * 输出：控制台表格 + 写入本 bundle 根目录的 SHA256SUMS.txt
  * 说明：SHA256SUMS.txt 自身不参与计算（否则无法收敛）。
@@ -46,7 +46,7 @@ const rows = files.map((rel) => {
 
 const width = Math.max(...rows.map((r) => r.rel.length), 12);
 const lines = [
-  '# 四象模型·管理世界 bundle · 逐文件 SHA256',
+  '# 四象模型·DSH智能体 bundle · 逐文件 SHA256',
   `# 文件数：${rows.length}`,
   '# 说明：本文件不含生成时间戳——内容确定的哈希清单才可复现，重跑本脚本不会产生无意义差异。',
   '',
