@@ -1,4 +1,4 @@
-# 四象模型·管理世界 · DSH 安装说明
+# 四象模型·DSH智能体 · DSH 安装说明
 
 适用于 **DeepSeek Harness 桌面端 / Web 端**（bundle 形态，DSH `>= 0.2.0-rc.2`）。
 
@@ -6,7 +6,7 @@
 
 ## 一、这个包是什么
 
-`dsh-preset-four-images-model` 是一个 **DSH Agent preset bundle**。装上之后，新建会话的预设选择器里会多出一张卡片 **四象模型·管理世界**，选中它即得到一个"**主体** / 环境 / 地位 / 行为 / 才能 / 心态"**六维**并行、每维走「A 阶段诊断 → B 阶段方案」的管理问题分析智能体。其中**才能与心态是两个独立维度**，从诊断到方案再到汇总都不合并。
+`dsh-preset-four-images-model` 是一个 **DSH Agent preset bundle**。装上之后，新建会话的预设选择器里会多出一张卡片 **四象模型·DSH智能体**，选中它即得到一个"**主体** / 环境 / 地位 / 行为 / 才能 / 心态"**六维**并行、每维走「A 阶段诊断 → B 阶段方案」的管理问题分析智能体。其中**才能与心态是两个独立维度**，从诊断到方案再到汇总都不合并。
 
 它**只引用 DSH 随附插件**，没有第三方依赖、没有安装脚本、不需要构建步骤，也不需要联网下载任何东西。
 
@@ -20,7 +20,7 @@
 
 ```
 plugin_manager({ action: "install_bundle", target: "<本目录的绝对路径>" })
-plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-images-model-1.4.3.tgz 的绝对路径>" })
+plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-images-model-1.4.6.tgz 的绝对路径>" })
 ```
 
 安装会在当前 profile 里执行 `pnpm add`。桌面端默认 profile 是 `desktop`。装完如果提示需要重启，就重启一次 DSH。
@@ -81,7 +81,7 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 
 ## 四、使用
 
-1. **新建会话**，在预设选择器里选 **四象模型·管理世界**（preset id `four-images-model`）。
+1. **新建会话**，在预设选择器里选 **四象模型·DSH智能体**（preset id `four-images-model`）。
 2. 直接描述你的管理问题，例如："某事业部新品导入周期比行业慢一倍，责任说不清。"
 3. 父智能体会走四阶段：主体+环境确认 → **位 / 行 / 才 / 心**并行诊断（环境维度沿用阶段一结果）→ 四个维度的方案 → 汇总为**六维各自独立成节**的报告与待验证项。
 
