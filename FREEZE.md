@@ -1,51 +1,72 @@
-# 冻结清单 · dsh-preset-four-images-model 1.4.3
+# 冻结清单 · dsh-preset-four-images-model 1.4.6
 
-> **状态：FROZEN（冻结发布态）**。本清单由 `tools/freeze-manifest.fixed.mjs` 依据磁盘实际内容生成；
+> **状态：FROZEN（冻结发布态）**。本清单由 `scripts/freeze-manifest.mjs` 依据磁盘实际内容生成；
 > 冻结生效后**包内任何文件不得修改**。确需调整必须递增 `version` 并重跑打包与全量校验流程。
 
 ## 一、分发产物（唯一）
 
 | 项 | 值 |
 |---|---|
-| 文件名 | `dsh-preset-four-images-model-1.4.3.tgz` |
-| 字节大小 | 59732 |
-| SHA-256 | `26CFC7060CF7280202710A9A00FBD3260C7385663017AF6F2DA6E364978626A6` |
+| 文件名 | `dsh-preset-four-images-model-1.4.6.tgz` |
+| 字节大小 | 578612 |
+| SHA-256 | `29055F0405B149A8F4B9CB342C4C46C463B6C2393309E86345EB87B22FBCE590` |
 | 所在目录 | `<本包>/artifacts/` |
-| 产物清单 | `artifacts/SHA256SUMS.txt` |
+| 产物清单 | `artifacts/SHA256SUMS.txt`（与本表同值：已核对一致） |
 
-## 二、冻结文件清单（源文件口径）
+核对命令（PowerShell，逐字可复制）：
 
-合计 **22 个文件 / 170841 字节**。口径 = 包内全部文件 − `artifacts/` − `SHA256SUMS.txt` − `FREEZE.md`；与 `SHA256SUMS.txt` 逐条对应，且等于 tgz 归档条目数。
-交叉校验：与 SHA256SUMS.txt 完全一致（22 条）
+```powershell
+Get-FileHash "<本包>\artifacts\dsh-preset-four-images-model-1.4.6.tgz" -Algorithm SHA256
+```
+
+## 二、冻结文件清单（源文件口径：不含 artifacts/ 与两个自引用清单）
+
+合计 **23 个文件 / 711028 字节**（另有本清单 FREEZE.md 自身，2024 字节量级，逐次生成会随内容变化）。
 
 | # | 文件 | 字节 | SHA-256 |
 |---|---|---|---|
-| 1 | `INSTALL.md` | 8705 | `7196C7A04ED94B2E15DC4528B35CBD1841ABCB54D7884D0BFFE5EC4FC1C59BD7` |
+| 1 | `INSTALL.md` | 8705 | `34AB539FD2F29A915C201327A3611F6C127F5505B9C24F4C1A6499974E6B254E` |
 | 2 | `LICENSE` | 1070 | `60AD16BFBEDC503E7EEF6362ADBF04C42F1DECBACA4249DC4FFC8187062EAF3C` |
-| 3 | `MANIFEST.md` | 56693 | `31C39B00ECECE15496CD7CBE6345446281335A66357FCB2E49317C541368E7A0` |
-| 4 | `README.md` | 6135 | `D5615A780A03D79A90FEE6912738F1D844298C1158D37FD30C36EF293D2D5E53` |
-| 5 | `cordis.patch.yml` | 14808 | `11ECB67C3EBEE372B46BB4F262E3204B808F3C7DCF2E0D1537B8D1683A09466F` |
-| 6 | `package.json` | 1223 | `3B36738E0B271473A7F2B1F4912DE90F592A6F44F368B5EC7E4BEB3DCFE6BEFA` |
-| 7 | `scripts/check.mjs` | 22218 | `1A0E4782C818A724896BDFDBBD8DC66D89E3618CA5C3C322FB4A9742C41AC65B` |
-| 8 | `scripts/checksums.mjs` | 2729 | `F6A51755C1EA01F30A4499578987259C9F3F56E3D641BFE7F9EEDEF4B6A3068D` |
-| 9 | `scripts/finalize.mjs` | 1970 | `25B0B9DCDA4D6F200B5EF237F10C3C6DEF5BCE6051B3B7F9695146195BDC56A2` |
-| 10 | `scripts/freeze-manifest.mjs` | 5745 | `9A5903C54856511B8035297EC7B5BBC3C6C0882C3F8AD9F720075DF559A5B683` |
-| 11 | `scripts/pack.mjs` | 3496 | `52BF0DD6B4D754DC6377C3EDDDEBE49B03CE653F572AF367F574F0E6779DB55B` |
-| 12 | `scripts/sync-roster.mjs` | 6977 | `710AF6164CFAA9B674A3BC3BBB3AD512068F7F1E51ECD416C5F7CA87F9B1BAAB` |
-| 13 | `subagents/four-images-beh-a.yaml` | 3994 | `D7D27592E76CD7A6FBCEBE065667DA7942DC5A5CD821C07AAE66759CD34025BA` |
-| 14 | `subagents/four-images-beh-b.yaml` | 2962 | `F4868E1E39297BF009D651B3E4EC20473AA7E7A116E9B050FD4913D0DDBB9BDC` |
-| 15 | `subagents/four-images-cog-a.yaml` | 3738 | `B19C717E0C79CEB90D7B643BC682AD24029DF414E481653657FA42F3186E0786` |
-| 16 | `subagents/four-images-cog-b.yaml` | 3283 | `6F9ADFF263B615E59F93A1AB28E3CF35D9FF9B42ECED64372E7B1C1FAD998E9F` |
-| 17 | `subagents/four-images-environment.yaml` | 3236 | `1718D48B3A828C28382DE7C1CECE76ED4260AF3CCAB502C8685D9A4523BB40C1` |
-| 18 | `subagents/four-images-pos-a.yaml` | 3911 | `4C72631881900F953210A2212CE8ADAE3CA53912047E131515E818D4563CB361` |
-| 19 | `subagents/four-images-pos-b.yaml` | 2876 | `0DE8D65262122B604FC38A7EC10A907014114777F92A0BD4ED4D117764E2B373` |
-| 20 | `subagents/four-images-subject.yaml` | 8376 | `03CDF05B3AFC2C8342D59E2DA90BCA3FC79B3B43A269143CC6969417BBCC8457` |
-| 21 | `subagents/four-images-tal-a.yaml` | 3503 | `BF43F76580DE6EFC9311ABE5564B2D6544B33A1EB4666C1EE71FFB758BFA8279` |
-| 22 | `subagents/four-images-tal-b.yaml` | 3193 | `33700F276C0823BC8763E1F4E2C2AA4045B43E6BF1C68CC196BE76A21DE5CDB3` |
+| 3 | `MANIFEST.md` | 56865 | `71F200B90C6D9F7470DA0493E10C9271BF27F79030E037F3374A0D7CA8025635` |
+| 4 | `README.md` | 7676 | `9EAB1E23C9D3C1A7CC91C6B69254CF5AB9283DBA09EDA65BCEB7A50B791C5BE9` |
+| 5 | `assets/images/four-images-model-2026.png` | 538261 | `58062B2204A548F73D5B931FB91E3F9EB196EB18A1D20BF62763D9273E3BCDF9` |
+| 6 | `cordis.patch.yml` | 14808 | `CCAC4F508CEFE1BE45F7FABCE767D7F7414C428FE9B37EE57EB6838D6E845FF2` |
+| 7 | `package.json` | 1237 | `3297D134C24BB25DA908F63FAD0889C06D916DB4B9B2AE8BAADE23DDDE5FB2BC` |
+| 8 | `scripts/check.mjs` | 22218 | `DF471578945242A6DBFC7C7A3F389DFD3AFE2F40D7BF332D391BFDDC71B79544` |
+| 9 | `scripts/checksums.mjs` | 2729 | `2B28DB96A278BA9371FBDEFC249C1D00335D4EA9FA3C06DFBF072864F09B9AC4` |
+| 10 | `scripts/finalize.mjs` | 1970 | `3CA263ACAB515D88D6B0A77AF3BAAD8AB5D6D257941BAF546C55C0397761BE14` |
+| 11 | `scripts/freeze-manifest.mjs` | 5934 | `DBD81132346164540F55EE48BCDFEB7681AC4F41544F063949D4C2FEA13DED33` |
+| 12 | `scripts/pack.mjs` | 3506 | `909DF1EB24F9C63F6AEB337DE55AA010C68A23934FA12FE429501213AAA8294B` |
+| 13 | `scripts/sync-roster.mjs` | 6977 | `D2E76CE0878BE892F1657D2B198B2E74F325DB309E8B1CA6393CE777177109EF` |
+| 14 | `subagents/four-images-beh-a.yaml` | 3994 | `D4570D689C03F566CA98689020CE3EF7579D32F36B5EC16150C50CECBB715C3F` |
+| 15 | `subagents/four-images-beh-b.yaml` | 2962 | `F4868E1E39297BF009D651B3E4EC20473AA7E7A116E9B050FD4913D0DDBB9BDC` |
+| 16 | `subagents/four-images-cog-a.yaml` | 3738 | `66D306656C0B11B0B40AC85F8C5ECD6BE7A360FB5CA463781426E053B3D60F7F` |
+| 17 | `subagents/four-images-cog-b.yaml` | 3283 | `6F9ADFF263B615E59F93A1AB28E3CF35D9FF9B42ECED64372E7B1C1FAD998E9F` |
+| 18 | `subagents/four-images-environment.yaml` | 3236 | `E99B784EBA823C9B7C1BF79A4502F3C17F1170660875B38DA0BAF481D84CE98A` |
+| 19 | `subagents/four-images-pos-a.yaml` | 3911 | `9E85782324835C026B06879914B8A215F40ACA065448A7ED169AE2AB6BA5CF5F` |
+| 20 | `subagents/four-images-pos-b.yaml` | 2876 | `0DE8D65262122B604FC38A7EC10A907014114777F92A0BD4ED4D117764E2B373` |
+| 21 | `subagents/four-images-subject.yaml` | 8376 | `03CDF05B3AFC2C8342D59E2DA90BCA3FC79B3B43A269143CC6969417BBCC8457` |
+| 22 | `subagents/four-images-tal-a.yaml` | 3503 | `392AA15014757B2EBD71A2F4D091DBE0B003CE1F83359EEE5B053F73E8F0DB12` |
+| 23 | `subagents/four-images-tal-b.yaml` | 3193 | `33700F276C0823BC8763E1F4E2C2AA4045B43E6BF1C68CC196BE76A21DE5CDB3` |
 
-## 三、冻结后纪律
+> 上表与包根 `SHA256SUMS.txt` 同源；`SHA256SUMS.txt` 与 `FREEZE.md` 均不参与 tgz 归档（避免哈希自引用）。
+
+## 三、冻结前体检与回归结论
+
+| 检查项 | 结果 |
+|---|---|
+| BOM 文件数 | 0 |
+| CRLF 文件数（要求统一 LF） | 0 |
+| 替换字符 U+FFFD 文件数 | 0 |
+| 历史遗留词命中文件数（5 类） | 0 |
+| 全量结构校验 | `node scripts/check.mjs` → 通过，0 失败 |
+| 打包确定性 | 连续 3 次 `node scripts/pack.mjs` → 同一 SHA-256 与字节数 |
+| 归档 mtime/uid/gid | 归档内 mtime = 0、uid = 0、gid = 0（与构建时间、机器无关） |
+| 归档条目顺序 | 按路径排序（打包顺序确定） |
+
+## 四、冻结后纪律
 
 1. 对外分发只用 `artifacts/` 下的 tgz，安装前用 `Get-FileHash` 核对上表 SHA-256；
-2. 如需改动：**递增 `version`** → 重跑 `checksums → pack → finalize` → 重跑 `check.mjs` 与 `tools/release-verify.mjs` → 用本脚本重生成 FREEZE.md；
+2. 收到本版后如需改动：**递增 `version`** → 重跑 `checksums → pack → finalize` → 重跑 `check.mjs` → 更新本清单（`node scripts/freeze-manifest.mjs`）；
 3. 禁止"同版本号原地改内容再打包"：pnpm 会判 `Already up to date`，装机副本不会更新；
-4. 名册条目 id 与上游版本相同：升级后**必须**执行 `node scripts/sync-roster.mjs`。
+4. 名册条目 id 与 1.3.5 相同：升级后**必须**执行 `node scripts/sync-roster.mjs`，否则运行时仍读旧契约。
