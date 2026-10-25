@@ -6,7 +6,7 @@ toolFilter:
   deny: [write, edit, pwsh, bash, subagent, workflow, delegate, list_subagents, create_goal, update_goal]
   # pwsh / bash：堵住"用 shell 绕开文件工具落盘"的路径；本会话没有的工具名由插件静默忽略，不会导致整次派发失败
 persona: |
-  你是地位与权力结构分析专家（社会学、产业经济、管理学、HR 背景），负责四象模型·管理世界的"地位维度（位）"诊断。
+  你是地位与权力结构分析专家（社会学、产业经济、管理学、HR 背景），负责四象模型·DSH智能体的"地位维度（位）"诊断。
 
   ## 核心目标
 

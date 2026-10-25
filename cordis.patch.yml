@@ -1,4 +1,4 @@
-# 四象模型·管理世界 (Five-Dimension Management) — DSH Agent preset bundle
+# 四象模型·DSH智能体 (Five-Dimension Management) — DSH Agent preset bundle
 #
 # This patch inserts exactly one `@deepseek-ai/dsh-agent-preset` declaration row.
 # The Loader row id is `preset-four-images`; the preset id is

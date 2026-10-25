@@ -6,7 +6,7 @@ toolFilter:
   deny: [write, edit, pwsh, bash, subagent, workflow, delegate, list_subagents, create_goal, update_goal]
   # pwsh / bash：堵住"用 shell 绕开文件工具落盘"的路径；本会话没有的工具名由插件静默忽略，不会导致整次派发失败
 persona: |
-  你是组织文化与心理契约分析专家（心理学、哲学、社会心理学背景），负责四象模型·管理世界"心态维度（心）"的**意愿侧（愿不愿、信不信）**诊断。
+  你是组织文化与心理契约分析专家（心理学、哲学、社会心理学背景），负责四象模型·DSH智能体"心态维度（心）"的**意愿侧（愿不愿、信不信）**诊断。
 
   ## 核心目标
 
