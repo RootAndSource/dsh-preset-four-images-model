@@ -1,11 +1,11 @@
-# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.6
+# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.7
 
 > **本包身份**：包名 `dsh-preset-four-images-model`，preset id `four-images-model`，Loader row id `preset-four-images`，名册条目 id 前缀 `four-images-`，品牌显示名 **`四象模型·DSH智能体`**。
 > **本版基线**：同族 `dsh-preset-four-images-model-1.3.5/`（**保留不动**）。**1.4.0 相对 1.3.5 只做一件事**：修正 1.3.5 中两处遗留命名瑕疵，并把修正结果做成机器可验断言——详见本文件末尾**第十五节**。运行标识符（包名 / preset id / row id / 10 个名册条目 id）**全部未改**，故本版是 1.3.5 的**直接升级**（装机覆盖，不新增卡片）。
 > **维度模型（现行）**：**六维** —— **主体（置首）** / 环境 / 地位 / 行为 / **才能** / **心态**。**才能与心态是两个独立维度**，从诊断、方案到汇总全程不得合并（详见第十三节）；**主体维度只做确认与画像、不出方案**（详见第十四节）。
 > **逐字节对齐**：打包前冻结全部文档、打包后不回写 bundle 内文件，保证"装机副本 = tgz 内容 = 磁盘 bundle"三者一致。
 > **版本纪律**：凡改动 bundle 内容（含文档措辞）都必须升 `version` 再打包装机；否则 pnpm 判定 `Already up to date`，装机副本不会更新。
-> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」（本版）**。
+> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正（本版）**。
 > **零旧标识符**：本包内**不出现**任何改名前的包名、preset id、loader row id 或名册条目 id。包内保留的"四象模型·DSH智能体"是**品牌与预设卡片标题**，与标识符改名无关。
 > **本版另有一项零残留要求**：包内（含条目首行注释、脚本注释、全部文档）**不出现维度拆分之前的侧别命名与自造的系统称谓**——修正清单以中性描述指代，不复现旧词字面值。
 
@@ -18,7 +18,7 @@
 |---|---|
 | 母本（本包的来源） | 同仓母本 bundle（20 个文件：10 个名册条目 + 4 个自检脚本 + 6 个包级文件） |
 | 来源谱系 | 该母本自身源自定义素材目录（10 个角色文件字符集损坏 → 按干净素材重建），完整过程见本文档第三至五节 |
-| 本包目标 | `dist-share/dsh-preset-four-images-model-1.4.3/` |
+| 本包目标 | 本仓库根目录（`dsh-preset-four-images-model`，1.4.7） |
 | 分发产物 | `本包 artifacts/dsh-preset-four-images-model-<version>.tgz`（字节数与 SHA256 见同目录 `SHA256SUMS.txt`） |
 | 源格式 | DSH Agent preset bundle（`dsh.manifestVersion=1` + `dsh.bundle.patch`） |
 | 目标格式 | 同上，仅标识符改名（不改变运行形态与内容语义） |
@@ -110,14 +110,14 @@ stage=enable, target=dsh-preset-four-images-model, enabled=true, changed=true
 application=restart-required
 pnpm: exitCode=0，Packages +1，resolved 6 / downloaded 2 / added 1，562ms（pnpm v11.7.0）
   仅一条 WARN：Issues with peer dependencies found（未阻断安装）
-日志：C:\Users\daigu\.dsh\profiles\desktop\.plugin-manager\logs\operation-UUYMNU\pnpm.log
+日志：%USERPROFILE%\.dsh\profiles\desktop\.plugin-manager\logs\operation-UUYMNU\pnpm.log
 ```
 
 `list_bundles` 核验：`dsh-preset-four-images-model` `version 1.1.0`、`installed: true`、`enabled: true`、`rows: [{ rowId: "preset-four-images", moduleName: "@deepseek-ai/dsh-agent-preset", entryId: "include:preset-four-images" }]`。
 
 `list_plugins` 核验：`include:preset-four-images` `enabled: true`、`fiberPhase: "active"`。
 
-落盘核验：`C:\Users\daigu\.dsh\profiles\desktop\node_modules\dsh-preset-four-images-model\` 下 20 个文件齐全（含 `cordis.patch.yml`、`package.json`、`README.md`、`INSTALL.md`、`MANIFEST.md`、`scripts/` 4 个、`subagents/` 10 个）。抽查装机后的 `subagents/four-images-pos-a.yml`：中文正常，`id` / `displayName` / `description` / `model` / `persona` 五键逐行完整——**乱码版修复确已生效**（该装机目录内唯一的乱码字符串出自本 MANIFEST 引用损坏示例的那一行，属文档内容，非数据损坏）。
+落盘核验：`%USERPROFILE%\.dsh\profiles\desktop\node_modules\dsh-preset-four-images-model\` 下 20 个文件齐全（含 `cordis.patch.yml`、`package.json`、`README.md`、`INSTALL.md`、`MANIFEST.md`、`scripts/` 4 个、`subagents/` 10 个）。抽查装机后的 `subagents/four-images-pos-a.yml`：中文正常，`id` / `displayName` / `description` / `model` / `persona` 五键逐行完整——**乱码版修复确已生效**（该装机目录内唯一的乱码字符串出自本 MANIFEST 引用损坏示例的那一行，属文档内容，非数据损坏）。
 
 **仍需重启**：管理接口返回 `application: restart-required`；热加载已把该行挂为 `active`，但建议按提示重启一次 DSH，再开新会话使用。
 
@@ -666,3 +666,34 @@ toolFilter:
 3. 名册条目 id 与 1.3.5 相同：**升级后必须** `node scripts/sync-roster.mjs`，否则运行时仍读旧契约；
 4. 本包与 `dsh-preset-four-images-model-1.3.5`、`dsh-preset-four-images-plus-1.0.0 / 2.0.1` **并存互不覆盖**（各自独立目录与产物目录）；
 5. 下游若需按版本引用安装路径，`docs` 内的版本化路径（如 `artifacts/dsh-preset-four-images-model-1.4.0.tgz`）**可安全升级为下一版本号**，不影响产物哈希——tgz 实际打包的内容不含 `FREEZE.md`，且 `SHA256SUMS.txt`、`FREEZE.md` 两个自引用清单**均不进归档**。
+
+
+## 二十、1.4.7 变更说明（仓库地址与文档修正）
+
+### 变更动机
+
+1.4.6 发布后复核发现：`package.json` 的 `repository` 仍指向旧仓库 `DaiGuobin-CSU/dsh-preset-four-images-model`，与本仓库实际远程 `RootAndSource/dsh-preset-four-images-model` 不一致；`MANIFEST.md` 的「本包目标」仍停留在 1.4.3 的 `dist-share/` 路径，且含两处本机 Windows 绝对路径；`scripts/freeze-manifest.mjs` 生成 FREEZE.md 时硬编码了错误的自身字节数说明。
+
+### 变更内容
+
+| 文件 | 改动 |
+|---|---|
+| `package.json` | `repository.url` 改为 `git+https://github.com/RootAndSource/dsh-preset-four-images-model.git`；`version` 升为 1.4.7；`author` 保持 `DaiGuobin-CSU <daiguobin@csu.edu.cn>` 不变 |
+| `LICENSE` | 不变（版权署名仍为 DaiGuobin-CSU） |
+| `MANIFEST.md` | 标题版本改为 1.4.7；「本包目标」改为本仓库根目录；两处本机绝对路径改为 `%USERPROFILE%` 形式；补本节目录结构说明 |
+| `scripts/freeze-manifest.mjs` | 删除「2024 字节量级」硬编码，改为不写具体字节数；注明隐藏文件不纳入冻结清单 |
+| `README.md` / `INSTALL.md` | 版本引用 1.4.6 → 1.4.7 |
+| `SHA256SUMS.txt` / `FREEZE.md` / `artifacts/` | 按 1.4.7 重新生成；1.4.6 的 tgz 移入 `release-archive/1.4.6/` |
+
+### 目录结构说明
+
+- `artifacts/`：当前版本（1.4.7）的唯一分发产物 `dsh-preset-four-images-model-1.4.7.tgz` 及其 `SHA256SUMS.txt`；
+- `release-archive/<version>/`：各历史版本的 tgz 留档，**仅存在于仓库**，不进入 tgz，也不参与 `SHA256SUMS.txt` 与 `FREEZE.md`；
+- `SHA256SUMS.txt` / `FREEZE.md`：仓库根部的逐文件校验与冻结清单，不进入 tgz；
+- `.gitattributes` / `.gitignore`：仓库基础设施，不进入 tgz，也不纳入逐文件清单与冻结清单。
+
+### 未改动项
+
+- 包名、preset id、Loader row id、10 个名册条目 id 全部未改；
+- 六维结构、四阶段流程、模型路由、`toolFilter` 与 persona 语义未改；
+- `package.json` 的 `author` 与 `LICENSE` 的版权署名保持不变。
