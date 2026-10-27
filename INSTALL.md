@@ -20,7 +20,7 @@
 
 ```
 plugin_manager({ action: "install_bundle", target: "<本目录的绝对路径>" })
-plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-images-model-1.4.6.tgz 的绝对路径>" })
+plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-images-model-1.4.7.tgz 的绝对路径>" })
 ```
 
 安装会在当前 profile 里执行 `pnpm add`。桌面端默认 profile 是 `desktop`。装完如果提示需要重启，就重启一次 DSH。

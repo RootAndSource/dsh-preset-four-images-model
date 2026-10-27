@@ -32,10 +32,10 @@
 |---|---|
 | 安装包 | `dsh-preset-four-images-model-<版本号>.tgz` |
 
-下载后建议核对完整性。以 1.4.6 为例：
+下载后建议核对完整性。以 1.4.7 为例：
 
 ```powershell
-Get-FileHash "<你下载的目录>\dsh-preset-four-images-model-1.4.6.tgz" -Algorithm SHA256
+Get-FileHash "<你下载的目录>\dsh-preset-four-images-model-1.4.7.tgz" -Algorithm SHA256
 ```
 
 期望值与字节大小见该 Release 的说明。两者不一致就不要安装。
@@ -55,7 +55,7 @@ plugin_manager({ action: "install_bundle", target: "dsh-subagent-library" })
 把 `<下载目录>` 换成你实际保存 tgz 的位置（**必须是绝对路径**）：
 
 ```
-plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-four-images-model-1.4.6.tgz" })
+plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-four-images-model-1.4.7.tgz" })
 ```
 
 装完若提示需要重启 DSH，就重启一次。
