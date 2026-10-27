@@ -24,6 +24,7 @@ function walk(dir, acc = []) {
 
 const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
 const SELF_REFERENTIAL = new Set(['FREEZE.md', 'SHA256SUMS.txt']);
+// 隐藏文件（.gitattributes / .gitignore 等）属于仓库基础设施、不进入 tgz，故不纳入冻结清单。
 const files = walk(root)
   .filter((f) => !SELF_REFERENTIAL.has(f))
   .filter((f) => !f.split('/').some((seg) => seg.startsWith('.')))
@@ -80,7 +81,7 @@ lines.push('```');
 lines.push('');
 lines.push('## 二、冻结文件清单（源文件口径：不含 artifacts/ 与两个自引用清单）');
 lines.push('');
-lines.push(`合计 **${totalFiles} 个文件 / ${totalBytes} 字节**（另有本清单 FREEZE.md 自身，2024 字节量级，逐次生成会随内容变化）。`);
+lines.push(`合计 **${totalFiles} 个文件 / ${totalBytes} 字节**（本清单 FREEZE.md 自身不参与校验，逐次生成会随内容变化）。`);
 lines.push('');
 lines.push('| # | 文件 | 字节 | SHA-256 |');
 lines.push('|---|---|---|---|');
