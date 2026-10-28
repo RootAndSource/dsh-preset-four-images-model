@@ -22,9 +22,11 @@
 
 适用于 **DeepSeek Harness（桌面端 / Web 端）**。
 
-> **你不需要 clone 本仓库。** 只需从 Releases 下载一个 `.tgz` 安装包，按下面四步安装即可。
+> **你不需要 clone 本仓库。** 可以直接按 npm 包名安装（推荐），也可以从 Releases 下载 `.tgz`，按下面四步安装即可。
 
-## 一、下载安装包
+## 一、下载安装包（使用 tgz 时）
+
+> 如果按 npm 包名安装，可以跳过本节，直接看第 2 步的方式 A。
 
 到本仓库的 **Releases** 页面，下载最新版：
 
@@ -32,10 +34,10 @@
 |---|---|
 | 安装包 | `dsh-preset-four-images-model-<版本号>.tgz` |
 
-下载后建议核对完整性。以 1.4.7 为例：
+下载后建议核对完整性。以 1.4.8 为例：
 
 ```powershell
-Get-FileHash "<你下载的目录>\dsh-preset-four-images-model-1.4.7.tgz" -Algorithm SHA256
+Get-FileHash "<你下载的目录>\dsh-preset-four-images-model-1.4.8.tgz" -Algorithm SHA256
 ```
 
 期望值与字节大小见该 Release 的说明。两者不一致就不要安装。
@@ -52,10 +54,18 @@ plugin_manager({ action: "install_bundle", target: "dsh-subagent-library" })
 
 ### 第 2 步：装本插件
 
-把 `<下载目录>` 换成你实际保存 tgz 的位置（**必须是绝对路径**）：
+方式 A（推荐，npm 包名）：
 
 ```
-plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-four-images-model-1.4.7.tgz" })
+plugin_manager({ action: "install_bundle", target: "dsh-preset-four-images-model" })
+```
+
+也可以在 DSH 的 **设置 → 插件 → 添加插件** 里填 `dsh-preset-four-images-model`。
+
+方式 B（本地 tgz）：把 `<下载目录>` 换成你实际保存 tgz 的位置（**必须是绝对路径**）：
+
+```
+plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-four-images-model-1.4.8.tgz" })
 ```
 
 装完若提示需要重启 DSH，就重启一次。

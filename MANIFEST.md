@@ -1,11 +1,11 @@
-# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.7
+# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.8
 
 > **本包身份**：包名 `dsh-preset-four-images-model`，preset id `four-images-model`，Loader row id `preset-four-images`，名册条目 id 前缀 `four-images-`，品牌显示名 **`四象模型·DSH智能体`**。
 > **本版基线**：同族 `dsh-preset-four-images-model-1.3.5/`（**保留不动**）。**1.4.0 相对 1.3.5 只做一件事**：修正 1.3.5 中两处遗留命名瑕疵，并把修正结果做成机器可验断言——详见本文件末尾**第十五节**。运行标识符（包名 / preset id / row id / 10 个名册条目 id）**全部未改**，故本版是 1.3.5 的**直接升级**（装机覆盖，不新增卡片）。
 > **维度模型（现行）**：**六维** —— **主体（置首）** / 环境 / 地位 / 行为 / **才能** / **心态**。**才能与心态是两个独立维度**，从诊断、方案到汇总全程不得合并（详见第十三节）；**主体维度只做确认与画像、不出方案**（详见第十四节）。
 > **逐字节对齐**：打包前冻结全部文档、打包后不回写 bundle 内文件，保证"装机副本 = tgz 内容 = 磁盘 bundle"三者一致。
 > **版本纪律**：凡改动 bundle 内容（含文档措辞）都必须升 `version` 再打包装机；否则 pnpm 判定 `Already up to date`，装机副本不会更新。
-> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正（本版）**。
+> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档（本版）**。
 > **零旧标识符**：本包内**不出现**任何改名前的包名、preset id、loader row id 或名册条目 id。包内保留的"四象模型·DSH智能体"是**品牌与预设卡片标题**，与标识符改名无关。
 > **本版另有一项零残留要求**：包内（含条目首行注释、脚本注释、全部文档）**不出现维度拆分之前的侧别命名与自造的系统称谓**——修正清单以中性描述指代，不复现旧词字面值。
 
@@ -18,7 +18,7 @@
 |---|---|
 | 母本（本包的来源） | 同仓母本 bundle（20 个文件：10 个名册条目 + 4 个自检脚本 + 6 个包级文件） |
 | 来源谱系 | 该母本自身源自定义素材目录（10 个角色文件字符集损坏 → 按干净素材重建），完整过程见本文档第三至五节 |
-| 本包目标 | 本仓库根目录（`dsh-preset-four-images-model`，1.4.7） |
+| 本包目标 | 本仓库根目录（`dsh-preset-four-images-model`，1.4.8） |
 | 分发产物 | `本包 artifacts/dsh-preset-four-images-model-<version>.tgz`（字节数与 SHA256 见同目录 `SHA256SUMS.txt`） |
 | 源格式 | DSH Agent preset bundle（`dsh.manifestVersion=1` + `dsh.bundle.patch`） |
 | 目标格式 | 同上，仅标识符改名（不改变运行形态与内容语义） |
@@ -697,3 +697,27 @@ toolFilter:
 - 包名、preset id、Loader row id、10 个名册条目 id 全部未改；
 - 六维结构、四阶段流程、模型路由、`toolFilter` 与 persona 语义未改；
 - `package.json` 的 `author` 与 `LICENSE` 的版权署名保持不变。
+
+
+## 二十一、1.4.8 变更说明（npm 发布与安装文档）
+
+### 变更动机
+
+1.4.7 已发布到 npm（`dsh-preset-four-images-model@1.4.7`），但 README/INSTALL 仍只写“从 Releases 下载 tgz”，没有说明可以直接按 npm 包名安装。为了让使用者用一条 `plugin_manager({ action: "install_bundle", target: "dsh-preset-four-images-model" })` 完成安装，1.4.8 补充 npm 安装说明并升版重建。
+
+### 变更内容
+
+| 文件 | 改动 |
+|---|---|
+| `package.json` | `version` 升为 1.4.8 |
+| `README.md` | 增加“按 npm 包名安装”说明（第 2 步方式 A），tgz 方式保留为方式 B；版本引用改为 1.4.8 |
+| `INSTALL.md` | 方式 A 增加 npm 包名安装命令，本地目录与 tgz 作为备选；版本引用改为 1.4.8 |
+| `MANIFEST.md` | 标题版本改为 1.4.8；版本推进补 1.4.8；补本节 |
+| `SHA256SUMS.txt` / `FREEZE.md` / `artifacts/` | 按 1.4.8 重新生成；1.4.7 的 tgz 移入 `release-archive/1.4.7/` |
+
+### 未改动项
+
+- 包名、preset id、Loader row id、10 个名册条目 id 全部未改；
+- 六维结构、四阶段流程、模型路由、`toolFilter` 与 persona 语义未改；
+- `package.json` 的 `author` 与 `LICENSE` 的版权署名保持不变；
+- npm 包名与 DSH bundle 结构不变。

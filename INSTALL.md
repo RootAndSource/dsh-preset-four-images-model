@@ -16,11 +16,17 @@
 
 ### 方式 A：让 DSH 自己装（推荐）
 
-用插件管理工具安装，`target` 传本目录的绝对路径，或传打包出来的 `.tgz`：
+用插件管理工具安装。推荐直接按 npm 包名（已发布到 npm，无需下载）：
+
+```
+plugin_manager({ action: "install_bundle", target: "dsh-preset-four-images-model" })
+```
+
+也可以传本目录的绝对路径，或传打包出来的 `.tgz`：
 
 ```
 plugin_manager({ action: "install_bundle", target: "<本目录的绝对路径>" })
-plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-images-model-1.4.7.tgz 的绝对路径>" })
+plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-images-model-1.4.8.tgz 的绝对路径>" })
 ```
 
 安装会在当前 profile 里执行 `pnpm add`。桌面端默认 profile 是 `desktop`。装完如果提示需要重启，就重启一次 DSH。
