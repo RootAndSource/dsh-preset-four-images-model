@@ -1,7 +1,7 @@
 # 四象模型·DSH智能体 · 打包产物校验
 # 说明：本文件不含生成时间戳——内容确定的产物清单才可复现，重跑本脚本不会产生无意义差异。
 
-4A0C6325FEBAD212BC82743C368131578C6D83DD43DE1ADABA717805093BAE83    579431  dsh-preset-four-images-model-1.4.7.tgz
+4F1F03CB9A140D89B64A42E433E56E8A437B4F755338C4B29A29E900B94BE1E3    579899  dsh-preset-four-images-model-1.4.8.tgz
 
 # 核对（PowerShell）：
 #   Get-FileHash .\artifacts\<文件名>.tgz -Algorithm SHA256
