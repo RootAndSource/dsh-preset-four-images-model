@@ -64,7 +64,7 @@ const REQUIRED = [
   ...ROLE_ORDER.map((id) => `prompts/roles/${id}.md`),
 ];
 const REQUIRED_SCRIPTS = ['check.mjs', 'checksums.mjs', 'compose.mjs', 'finalize.mjs', 'freeze-manifest.mjs', 'pack.mjs'];
-const EXPECTED_PLUGIN_IDS = ['persona', 'time-context', 'tool-ask-user', 'tool-web', 'subagent-fast', 'subagent-pro', 'subagent-control', 'compaction'];
+const EXPECTED_PLUGIN_IDS = ['persona', 'time-context', 'tool-ask-user', 'tool-web', 'subagent-fast', 'subagent-pro', 'compaction'];
 
 const TEXT_EXT = ['.json', '.yml', '.yaml', '.md', '.mjs', '.js', '.txt'];
 const SKIP_EXT = new Set(['.tgz', '.gz', '.zip', '.png', '.jpg', '.pdf']);
@@ -243,7 +243,7 @@ if (patchText) {
   for (const id of EXPECTED_PLUGIN_IDS) {
     new RegExp(`- id: ${id}\\n`).test(patchText) ? ok(`preset 含插件行 ${id}`) : bad(`preset 缺插件行 ${id}`);
   }
-  for (const name of ['@deepseek-ai/dsh-persona', '@deepseek-ai/dsh-time-context', '@deepseek-ai/dsh-tool-ask-user', '@deepseek-ai/dsh-tool-web', '@deepseek-ai/dsh-tool-subagent', '@deepseek-ai/dsh-tool-subagent-control', '@deepseek-ai/dsh-compaction-basic', '@deepseek-ai/dsh-compaction-tool-result-pruner']) {
+  for (const name of ['@deepseek-ai/dsh-persona', '@deepseek-ai/dsh-time-context', '@deepseek-ai/dsh-tool-ask-user', '@deepseek-ai/dsh-tool-web', '@deepseek-ai/dsh-tool-subagent', '@deepseek-ai/dsh-compaction-basic', '@deepseek-ai/dsh-compaction-tool-result-pruner']) {
     patchText.includes(`'${name}'`) ? ok(`preset 引用 ${name}`) : bad(`preset 未引用 ${name}`);
   }
   /toolName:\s*subagent_fast/.test(patchText) ? ok('存在 subagent_fast 工具实例') : bad('缺 subagent_fast 工具实例');
@@ -252,6 +252,8 @@ if (patchText) {
   /model:\s*deepseek-v4-pro/.test(patchText) ? ok('subagent_pro 绑定 deepseek-v4-pro') : bad('subagent_pro 模型不是 deepseek-v4-pro');
   (patchText.match(/maxDepth:\s*1/g) ?? []).length >= 2 ? ok('两个 subagent 实例均限制 maxDepth: 1') : bad('subagent 实例缺 maxDepth: 1');
   patchText.includes('tool-cordis') ? bad('preset 仍含无用的 tool-cordis') : ok('preset 不再含 tool-cordis');
+  patchText.includes('tool-subagent-control') ? bad('preset 仍含 tool-subagent-control（子代理会主动回传消息）') : ok('preset 不含 tool-subagent-control');
+  patchText.includes('send_message') ? bad('preset 仍引用 send_message') : ok('preset 不引用 send_message（缺字段用重新派发）');
   /- id: (write|edit|tool-fs|tool-pwsh|tool-bash)\n/.test(patchText) ? bad('preset 含写类工具行（应保持只读组合）') : ok('preset 不含写类工具行（只读由组合保证）');
 
   const persona = blockScalar(patchText, 'prefix', 14);
@@ -319,6 +321,7 @@ const FORBIDDEN = [
   ['subagents/', '旧名册目录引用'],
   ['toolFilter', '旧只读机制'],
   ['降级路径', '旧降级路径说明'],
+  ['send_message', '已移除的子代理回传工具'],
   ['四象模型·管理世界', '旧品牌名'],
   ['四象模型·管理神器', '旧品牌名'],
   ['Five-Dimension', '旧五维描述'],
