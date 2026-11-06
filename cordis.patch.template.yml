@@ -1,0 +1,75 @@
+# 四象模型·DSH智能体 — DSH Agent preset bundle
+#
+# 生成关系：`scripts/compose.mjs` 读取本模板 + `prompts/parent.md` + `prompts/roles/*.md`
+# 合成 `cordis.patch.yml`（`--check` 校验生成物新鲜度）。请勿手改生成物；
+# 改角色/调度逻辑时改 `prompts/` 下的源文件，再运行 `node scripts/compose.mjs`。
+#
+# 设计要点：
+#   - 本 preset 是**完整的能力组合**：DSH Web/桌面端会把 host 层的 agent 平面工具行
+#     全部 disable，会话能用的工具由本清单决定，而不是继承。
+#   - 零第三方依赖：只引用 DSH 随附插件。
+#   - 只读由组合保证：本清单不含 write / edit / pwsh / fs 等写类工具，
+#     父智能体与子代理都没有落盘能力。
+#   - 派发：父智能体用官方 `@deepseek-ai/dsh-tool-subagent` 派发；
+#     诊断角色走 `subagent_fast`（flash），方案角色走 `subagent_pro`（pro）。
+#   - 角色框架内联在 persona 中；子代理继承本 preset，因此派发 prompt 只传任务。
+- insert:
+    - id: preset-four-images
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: four-images-model
+        name: 四象模型·DSH智能体
+        description: 主体/环境/地位/行为/才能/心态 六维、四阶段、A 诊断 + B 方案的管理问题分析与方案生成（零第三方依赖）
+        order: 10
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |
+{{PERSONA}}
+              complete: false
+              includeRuntimeContext: true
+          - id: time-context
+            name: '@deepseek-ai/dsh-time-context'
+          - id: tool-ask-user
+            name: '@deepseek-ai/dsh-tool-ask-user'
+          - id: tool-web
+            name: '@deepseek-ai/dsh-tool-web'
+            config:
+              fetch: true
+              searchTimeoutMs: 60000
+          - id: subagent-fast
+            name: '@deepseek-ai/dsh-tool-subagent'
+            config:
+              provider: spawn
+              toolName: subagent_fast
+              agentOptions:
+                model: deepseek-v4-flash
+              maxDepth: 1
+          - id: subagent-pro
+            name: '@deepseek-ai/dsh-tool-subagent'
+            config:
+              provider: spawn
+              toolName: subagent_pro
+              agentOptions:
+                model: deepseek-v4-pro
+              maxDepth: 1
+          - id: subagent-control
+            name: '@deepseek-ai/dsh-tool-subagent-control'
+          - id: compaction
+            name: cordis:group
+            group: true
+            isolate:
+              compaction: true
+              toolResultPruner: true
+            config:
+              - id: compaction-basic
+                name: '@deepseek-ai/dsh-compaction-basic'
+              - id: command-compact
+                name: '@deepseek-ai/dsh-command-compact'
+              - id: tool-result-pruner
+                name: '@deepseek-ai/dsh-compaction-tool-result-pruner'
+                config:
+                  thresholdChars: 8192
+                  headChars: 4096
+                  tailChars: 1024
