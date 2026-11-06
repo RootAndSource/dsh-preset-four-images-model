@@ -1,14 +1,20 @@
-# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.8
+# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.9
 
 > **本包身份**：包名 `dsh-preset-four-images-model`，preset id `four-images-model`，Loader row id `preset-four-images`，名册条目 id 前缀 `four-images-`，品牌显示名 **`四象模型·DSH智能体`**。
 > **本版基线**：同族 `dsh-preset-four-images-model-1.3.5/`（**保留不动**）。**1.4.0 相对 1.3.5 只做一件事**：修正 1.3.5 中两处遗留命名瑕疵，并把修正结果做成机器可验断言——详见本文件末尾**第十五节**。运行标识符（包名 / preset id / row id / 10 个名册条目 id）**全部未改**，故本版是 1.3.5 的**直接升级**（装机覆盖，不新增卡片）。
 > **维度模型（现行）**：**六维** —— **主体（置首）** / 环境 / 地位 / 行为 / **才能** / **心态**。**才能与心态是两个独立维度**，从诊断、方案到汇总全程不得合并（详见第十三节）；**主体维度只做确认与画像、不出方案**（详见第十四节）。
 > **逐字节对齐**：打包前冻结全部文档、打包后不回写 bundle 内文件，保证"装机副本 = tgz 内容 = 磁盘 bundle"三者一致。
 > **版本纪律**：凡改动 bundle 内容（含文档措辞）都必须升 `version` 再打包装机；否则 pnpm 判定 `Already up to date`，装机副本不会更新。
-> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档（本版）**。
+> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档** → **1.4.9 去除第三方名册库依赖，改为 DSH 官方 subagent 派发（本版）**。
 > **零旧标识符**：本包内**不出现**任何改名前的包名、preset id、loader row id 或名册条目 id。包内保留的"四象模型·DSH智能体"是**品牌与预设卡片标题**，与标识符改名无关。
 > **本版另有一项零残留要求**：包内（含条目首行注释、脚本注释、全部文档）**不出现维度拆分之前的侧别命名与自造的系统称谓**——修正清单以中性描述指代，不复现旧词字面值。
 
+
+## 零、当前版本速览（1.4.9）
+
+> **现行架构**：`four-images-model` 是**零第三方依赖**的 preset：由 DSH 官方 `@deepseek-ai/dsh-tool-subagent` 派发（`subagent_fast` / `subagent_pro`），角色框架内联在 persona 中（源码在 `prompts/`，由 `scripts/compose.mjs` 合成 `cordis.patch.yml`）；**不再使用任何第三方名册插件与名册目录**。
+>
+> **阅读本文档的约定**：第一至二十一节是历史变更记录。其中提到的 `tools/*`、`dist-share/*`、母本 bundle 均**不在本仓库**（属当时工作区记录）；`四象模型·管理世界` / `四象模型·管理神器` 是 1.4.5/1.4.6 之前的品牌名，现行品牌为 `四象模型·DSH智能体`；各节"校验项数"是当时记录，当前基线以本节、第二十二节与 `FREEZE.md` 为准。
 
 本文件记录本 bundle 的转换、改名与维度改造过程，来源对应、校验结果与需人工确认项。
 
@@ -227,7 +233,7 @@ toolFilter:
 | preset id | 母本的 preset id | `four-images-model` |
 | Loader row id | 母本的 row id | `preset-four-images` |
 | 名册条目 id（= 文件名），10 个 | 母本的 10 个简短角色 id | `four-images-subject` / `four-images-environment` / `four-images-pos-a` … `four-images-cog-b` |
-| **品牌显示名**（预设卡片标题、文档标题、产物注释） | 母本的品牌名 | **`四象模型·管理世界`**（16 个文件、26 处） |
+| **品牌显示名**（预设卡片标题、文档标题、产物注释） | 母本的品牌名 | **`四象模型·管理世界`**（16 个文件、26 处；历史品牌名，1.4.5/1.4.6 起为 `四象模型·DSH智能体`） |
 
 **品牌改名的边界**：仅替换品牌串本身。"四维定义"（章节名）、"四维并行"、"四维总览表"、"四维分析系统"里的通用量词与校验断言键名 `'四维定义'` **保留原样**——它们是描述"四个维度"的功能性表述，不是品牌标识符；替换它们会破坏校验断言与语义（如"四象并行"不成立）。
 
@@ -297,7 +303,7 @@ toolFilter:
 - **名册条目 id 不变**（10 个 `four-images-*`），条目内部 persona 不动——`tal` 系列本就只写能力侧、`cog` 系列本就只写意愿侧，无需改写。
 - 标识符体系不变（包名 / preset id / row id 均含 `four-images`，按决定保留）。
 - 各维度判断阈值不变。
-- 品牌显示名不变（`四象模型·管理世界`）。
+- 品牌显示名不变（当时为 `四象模型·管理世界`；后于 1.4.5/1.4.6 改为 `四象模型·DSH智能体`）。
 
 ### 验证结果
 
@@ -309,7 +315,7 @@ toolFilter:
 
 ### 升级动作
 
-因 bundle 内容已变，按版本纪律升版 `1.3.5 → 1.3.5` 并重打包安装；被取代的旧产物在装机核验通过后删除。
+因 bundle 内容已变，按版本纪律升版后重打包安装（历史记录原文写作"升版 `1.3.5 → 1.3.5`"，属笔误；实际发布版本见 §十六 的冻结记录）。
 
 ## 十四、1.3.5 新增主体维度并置首（六维）
 
@@ -423,7 +429,7 @@ toolFilter:
 
 ### 升级动作
 
-因 bundle 内容已变，按版本纪律升版 `1.3.5 → 1.3.5` 并重打包安装；被取代的旧产物在装机核验通过后删除。
+因 bundle 内容已变，按版本纪律升版后重打包安装（历史记录原文写作"升版 `1.3.5 → 1.3.5`"，属笔误；实际发布版本见 §十六 的冻结记录）。
 
 
 ## 十五、1.4.0 变更说明（修正遗留命名；运行标识符未改）
@@ -525,6 +531,47 @@ toolFilter:
 **教训（与同族 PLUS 包的一致性）**：派生版本必须**独立产物目录**，否则共享目录的产物清单会被兄弟包重写。本次两处脚本已改，1.4.0 的产物与哈希现在只落在 `<本包>/artifacts/`。
 **注意**：`dist-share/artifacts/` 仍由 1.3.5 的 `finalize.mjs` 管辖——**如再次对 1.3.5 运行 `finalize.mjs`，会连同目录内其他 tgz 一起重新登记**，这是其原有行为，非本版引入。
 
+## 十六、冻结发布记录（1.4.0 · Frozen）
+
+> **状态**：**已冻结（Frozen）**。`artifacts/dsh-preset-four-images-model-1.4.0.tgz` 为本版唯一分发产物；**包内任何文件此后不得修改**。确需调整必须递增 `version` 并重跑"打包 → 全量校验 → 更新本节"全流程。
+> **权威哈希**：字节大小与 SHA256 见 `artifacts/SHA256SUMS.txt`（本节不内嵌 tgz 哈希，避免"改文档→改哈希"的循环引用）；本包根目录 `SHA256SUMS.txt` 可逐文件复核。
+> **历史节的说明**：第五、十二节等早期章节记录的是**当时装机副本**的状态（如"20 个文件""scripts/ 4 个"），属历史事实；**本节描述的是 1.4.0 的冻结状态，现行状态以 §零 / §二十二 与 `FREEZE.md` 为准**。
+
+### 冻结范围
+
+| 项 | 值 |
+|---|---|
+| 源码目录 | `dist-share/dsh-preset-four-images-model-1.4.0/`（历史工作区路径，不在本仓库） |
+| 产物目录 | `dist-share/dsh-preset-four-images-model-1.4.0/artifacts/`（历史工作区路径，不在本仓库） |
+| 唯一分发产物 | `artifacts/dsh-preset-four-images-model-1.4.0.tgz` |
+| 冻结文件数（源文件口径） | **21 个**（= 进归档的文件数）；另有 `SHA256SUMS.txt`、`FREEZE.md` 两个自引用清单与 `artifacts/` 产物 |
+| 包内文件总字节 | 见 `SHA256SUMS.txt` |
+| 构建工具 | `scripts/pack.mjs`（Node 内置 zlib 现写 ustar 头；条目排序、mtime/uid/gid 归零） |
+| 冻结清单文档 | `FREEZE.md`（产物哈希 + 全部包内文件逐一哈希 + 体检结论 + 冻结后纪律；**不进入归档**） |
+| 清单生成器 | `scripts/freeze-manifest.mjs` |
+| 校验入口 | `node scripts/check.mjs` |
+
+### 冻结前体检与回归结论（1.4.0 当时）
+
+| 检查项 | 结果 |
+|---|---|
+| BOM | **0** 个文件带 BOM |
+| CRLF | **0** 个文件含 CRLF（统一 LF） |
+| 替换字符 U+FFFD | **0** 处 |
+| 历史遗留词（5 类） | **0** 处命中（含注释与脚本自身） |
+| 全量结构校验 | `node scripts/check.mjs` → **通过，0 失败**（当时代码） |
+| 确定性 | 连续两次 `pack` 产出的 tgz **SHA256 完全一致**（字节级相同） |
+| 文档与包内实际一致性 | `package.json.files` 声明的路径全部存在 |
+
+### 冻结后纪律
+
+1. 分发只发 `artifacts/dsh-preset-four-images-model-1.4.0.tgz`，安装前用 `Get-FileHash` 核对 `artifacts/SHA256SUMS.txt`；
+2. 收到本版后如需改动，**必须** `version` 递增并重跑全流程，禁止"原地改 + 重打包同版本号"——pnpm 会判 `Already up to date`，装机副本不会更新；
+3. （历史）1.3.5 时代的名册条目需用同步脚本维护；1.4.9 起该机制与脚本均已移除；
+4. 本包与 `dsh-preset-four-images-model-1.3.5`、`dsh-preset-four-images-plus-1.0.0 / 2.0.1` **并存互不覆盖**（各自独立目录与产物目录）；
+5. 下游若需按版本引用安装路径，文档内版本化路径**可安全升级为下一版本号**——tgz 实际打包的内容不含 `FREEZE.md`，且 `SHA256SUMS.txt`、`FREEZE.md` 两个自引用清单**均不进归档**。
+
+
 ## 十七、1.4.1 变更说明（包元数据与 LICENSE；运行标识符与产品语义未改）
 
 ### 变更动机
@@ -595,6 +642,8 @@ toolFilter:
 
 ## 十九、1.4.3 变更说明（品牌显示名改为「四象模型·管理世界」）
 
+> **历史记录**：本节的品牌名 `四象模型·管理世界` 后来在 1.4.5/1.4.6 被 `四象模型·DSH智能体` 取代；现行品牌以 §零 / §二十二 为准。
+
 ### 变更动机
 
 品牌显示名统一为 **四象模型·管理世界**（原「四象模型·管理神器」）。该名称出现在预设卡片标题、文档标题与角色自我介绍中，属面向使用者的展示层文案。
@@ -625,47 +674,6 @@ toolFilter:
 ### 升级动作
 
 改 `version` → 重跑 `checksums → pack → finalize` → `check.mjs` 与 `tools/release-verify.mjs` → `tools/freeze-manifest.fixed.mjs` → 提交。
-
-
-## 十六、冻结发布记录（1.4.0 · Frozen）
-
-> **状态**：**已冻结（Frozen）**。`artifacts/dsh-preset-four-images-model-1.4.0.tgz` 为本版唯一分发产物；**包内任何文件此后不得修改**。确需调整必须递增 `version` 并重跑"打包 → 全量校验 → 逐条目差异核验 → 更新本节"全流程。
-> **权威哈希**：字节大小与 SHA256 见 `artifacts/SHA256SUMS.txt`（本节不内嵌 tgz 哈希，避免"改文档→改哈希"的循环引用）；本包根目录 `SHA256SUMS.txt` 覆盖全部 22 个包内文件，可逐文件复核。
-> **历史节的说明**：第五、十二节等早期章节记录的是**当时装机副本**的状态（如"20 个文件""scripts/ 4 个"），属历史事实，未随 1.4.0 重写；**当前状态一律以本节为准**。
-
-### 冻结范围
-
-| 项 | 值 |
-|---|---|
-| 源码目录 | `dist-share/dsh-preset-four-images-model-1.4.3/` |
-| 产物目录 | `dist-share/dsh-preset-four-images-model-1.4.3/artifacts/` |
-| 唯一分发产物 | `artifacts/dsh-preset-four-images-model-1.4.0.tgz` |
-| 冻结文件数（源文件口径） | **21 个**（= 进归档的文件数）；另有 `SHA256SUMS.txt`、`FREEZE.md` 两个自引用清单与 `artifacts/` 产物，共 26 个文件在盘 |
-| 包内文件总字节 | 见 `SHA256SUMS.txt`（逐文件字节与哈希齐备） |
-| 构建工具 | `scripts/pack.mjs`（Node 内置 zlib 现写 ustar 头；条目排序、mtime/uid/gid 归零） |
-| 冻结清单文档 | `FREEZE.md`（归档用：产物哈希 + 全部包内文件逐一哈希 + 体检结论 + 冻结后纪律；**不进入归档**） |
-| 清单生成器 | `scripts/freeze-manifest.mjs`（按磁盘实际内容重算并重写 `FREEZE.md`） |
-| 校验入口 | `node scripts/check.mjs`（结构 + 契约 + 禁用词）／`node scripts/sync-roster.mjs --check`（活名册一致性） |
-
-### 冻结前体检与回归结论
-
-| 检查项 | 结果 |
-|---|---|
-| BOM | **0** 个文件带 BOM |
-| CRLF | **0** 个文件含 CRLF（统一 LF） |
-| 替换字符 U+FFFD | **0** 处 |
-| 历史遗留词（5 类） | **0** 处命中（含注释与脚本自身） |
-| 全量结构校验 | `node scripts/check.mjs` → **通过，0 失败** |
-| 确定性 | 连续两次 `pack` 产出的 tgz **SHA256 完全一致**（字节级相同） |
-| 文档与包内实际一致性 | `README.md` / `MANIFEST.md` 的包内容树与名册条目清单与实际文件一致；`package.json.files` 声明的路径全部存在 |
-
-### 冻结后纪律
-
-1. 分发只发 `artifacts/dsh-preset-four-images-model-1.4.0.tgz`，安装前用 `Get-FileHash` 核对 `artifacts/SHA256SUMS.txt`；
-2. 收到本版后如需改动，**必须** `version` 递增（例：1.4.1）并重跑全流程，禁止"原地改 + 重打包同版本号"——pnpm 会判 `Already up to date`，装机副本不会更新；
-3. 名册条目 id 与 1.3.5 相同：**升级后必须** `node scripts/sync-roster.mjs`，否则运行时仍读旧契约；
-4. 本包与 `dsh-preset-four-images-model-1.3.5`、`dsh-preset-four-images-plus-1.0.0 / 2.0.1` **并存互不覆盖**（各自独立目录与产物目录）；
-5. 下游若需按版本引用安装路径，`docs` 内的版本化路径（如 `artifacts/dsh-preset-four-images-model-1.4.0.tgz`）**可安全升级为下一版本号**，不影响产物哈希——tgz 实际打包的内容不含 `FREEZE.md`，且 `SHA256SUMS.txt`、`FREEZE.md` 两个自引用清单**均不进归档**。
 
 
 ## 二十、1.4.7 变更说明（仓库地址与文档修正）
@@ -721,3 +729,51 @@ toolFilter:
 - 六维结构、四阶段流程、模型路由、`toolFilter` 与 persona 语义未改；
 - `package.json` 的 `author` 与 `LICENSE` 的版权署名保持不变；
 - npm 包名与 DSH bundle 结构不变。
+
+## 二十二、1.4.9 变更说明（去除第三方名册库依赖，改为 DSH 官方 subagent 派发）
+
+### 变更动机
+
+1.4.8 及更早版本用第三方社区插件 `dsh-subagent-library` 做具名名册派发。该方案在当前 DSH 上已经失效，原因有三：
+
+1. **只读机制失效**：`dsh-subagent-library` 0.3.5 文档明确说明，DSH ≥0.2.1 无法强制执行逐条目 `toolFilter`，含该字段的条目会被拒绝委派。本包 5 个条目（主体 + 4 个 A 阶段）带 `toolFilter`，在 DSH 0.2.2-rc.1 上会被拒。
+2. **预设能力组合缺工具**：DSH Web/桌面端把 host 层的 agent 平面工具行全部 disable，会话能力由 preset 的 `plugins` 决定。旧版 preset 只声明 `persona` 与 `tool-cordis`，导致 `ask_user_question`、`web_search`、`subagent`、上下文压缩都不存在；旧文档宣称的"降级路径"也因缺 `subagent` 工具而无法执行。
+3. **文档与实现漂移**：安装说明同时存在"指向包内名册目录"与"复制到 `$DSH_HOME/subagents/`"两套互斥流程；`entriesDir` 的设置页入口并不存在。
+
+### 变更内容
+
+| 项 | 1.4.8 | 1.4.9 |
+|---|---|---|
+| 派发 | 第三方名册库 `delegate(library_id, prompt)` | DSH 官方 `subagent_fast` / `subagent_pro` |
+| 角色来源 | 10 个名册 YAML，运行时读取 | `prompts/` 源码 → `compose` 合成进 persona，随预设分发 |
+| 工具组合 | `persona` + `tool-cordis`（业务工具缺失） | `persona` + `time-context` + `tool-ask-user` + `tool-web` + 两个 `tool-subagent` + `tool-subagent-control` + compaction 组 |
+| 只读 | 依赖逐条目 `toolFilter` | 组合里不含写类工具（构造性只读） |
+| 模型路由 | 条目 `model` 字段 | 两个 subagent 工具实例的 `agentOptions.model` |
+| 升级后维护 | 改名册 YAML 热生效 | 改 `prompts/` → `compose` → 升版本重装 |
+| 第三方依赖 | 需要 `dsh-subagent-library` | 零 |
+| 移除文件 | — | `subagents/`、`scripts/sync-roster.mjs` |
+| 新增文件 | — | `prompts/parent.md`、`prompts/roles/*.md`、`cordis.patch.template.yml`、`scripts/compose.mjs` |
+
+### 提示词重构
+
+- 父 persona 新增「身份判定」：任务消息含「角色执行指令」时，子代理只执行指定角色章节，忽略调度器职责。子代理会继承父 preset，这条规则解决身份冲突。
+- 10 个角色章节保留原有分析框架、判断阈值与 JSON 契约；修正：
+  - 阶段二"并行发出五个调用"→ 四个（实际只派发位 / 行 / 才 / 心）；
+  - 删除 one-shot 名册下无法生效的"向子代理追问"旧描述，改为官方 `send_message`（子代理可续聊）；
+  - 环境角色回流对象由"心"修正为"才"（能力属才维度）；
+  - 六维总览表列定义明确为"主体行 × 主 / 环 / 位 / 行 / 才 / 心 六列"。
+
+### 兼容性影响（破坏性）
+
+1. 不再随包提供名册目录与名册 id；1.4.8 用户若在别处依赖这些名册条目，需要自行保留副本。
+2. 不再支持"改名册 YAML 热生效"；角色调整必须走源码 + `compose` + 升版本。
+3. `engines.dsh` 由 `>=0.2.0-rc.2` 提升为 `>=0.2.1-rc.2`（本组合依赖 0.2.1+ 的官方工具行）。
+4. 运行标识符不变：包名、preset id `four-images-model`、Loader row id `preset-four-images`。
+
+### 验证结果
+
+见 `FREEZE.md`（其中记录实际 `check.mjs` 统计、打包确定性、产物与重构建一致性）。**未做真机端到端验证**：本仓库环境没有可用的 `plugin_manager` 安装通道，安装后请按 `INSTALL.md` 第三节人工跑一遍。
+
+### 升级动作
+
+`compose` → `checksums` → `pack` → `finalize` → `check` → `freeze-manifest` → `check`；递增 version 后重新安装，并删除旧的名册目录配置。
