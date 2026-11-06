@@ -2,12 +2,12 @@
 /**
  * 四象模型·DSH智能体 bundle · 打包为 tgz
  * 用法：node scripts/pack.mjs
- * 输出：dist-share/artifacts/dsh-preset-four-images-model-<version>.tgz
+ * 输出：本 bundle 内 artifacts/dsh-preset-four-images-model-<version>.tgz
  *
  * 实现说明：用 Node 内置 zlib 现写 ustar 头，无第三方依赖（不需要 tar 命令行）。
  * 确定性：条目按路径排序、mtime 归零、uid/gid 归零，同一份内容重复打包哈希一致。
+ * 同时导出 buildTgz()，供 check.mjs（产物核对）与 freeze-manifest.mjs（确定性）复用。
  */
-
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
@@ -15,13 +15,11 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, relative, resolve, sep } from 'node:path';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
-const prefix = pkg.name;
-const outDir = join(root, 'artifacts');
-const outFile = join(outDir, `${pkg.name}-${pkg.version}.tgz`);
 
-const INCLUDE_TOP = ['package.json', 'cordis.patch.yml', 'README.md', 'INSTALL.md', 'MANIFEST.md', 'LICENSE'];
-const INCLUDE_DIRS = ['subagents', 'scripts', 'assets'];
+/** 归档根级文件（顺序无关，打包前统一排序） */
+export const INCLUDE_TOP = ['package.json', 'cordis.patch.yml', 'cordis.patch.template.yml', 'README.md', 'INSTALL.md', 'MANIFEST.md', 'LICENSE'];
+/** 归档目录（递归包含） */
+export const INCLUDE_DIRS = ['prompts', 'scripts', 'assets'];
 
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {
@@ -31,14 +29,6 @@ function walk(dir, acc = []) {
   }
   return acc;
 }
-
-const entries = [];
-for (const f of INCLUDE_TOP) entries.push(f);
-for (const d of INCLUDE_DIRS) {
-  const abs = join(root, d);
-  for (const f of walk(abs)) entries.push(relative(root, f).split(sep).join('/'));
-}
-entries.sort();
 
 function tarHeader(name, size) {
   const h = Buffer.alloc(512, 0);
@@ -66,26 +56,47 @@ function tarHeader(name, size) {
   return h;
 }
 
-const chunks = [];
-const manifest = [];
-for (const rel of entries) {
-  const data = readFileSync(join(root, rel));
-  const name = `${prefix}/${rel}`;
-  chunks.push(tarHeader(name, data.length), data);
-  const pad = (512 - (data.length % 512)) % 512;
-  if (pad) chunks.push(Buffer.alloc(pad, 0));
-  manifest.push({ rel, size: data.length, sha256: createHash('sha256').update(data).digest('hex').toUpperCase() });
+/**
+ * 按 bundle 目录构建确定性 tgz（不写盘）。
+ * @param {string} bundleRoot bundle 根目录
+ * @returns {{buffer: Buffer, entries: Array<{rel: string, size: number, sha256: string}>, sha256: string, size: number}}
+ */
+export function buildTgz(bundleRoot = root) {
+  const pkg = JSON.parse(readFileSync(join(bundleRoot, 'package.json'), 'utf8'));
+  const prefix = pkg.name;
+  const entries = [...INCLUDE_TOP];
+  for (const d of INCLUDE_DIRS) {
+    for (const f of walk(join(bundleRoot, d))) entries.push(relative(bundleRoot, f).split(sep).join('/'));
+  }
+  entries.sort();
+
+  const chunks = [];
+  const manifest = [];
+  for (const rel of entries) {
+    const data = readFileSync(join(bundleRoot, rel));
+    const name = `${prefix}/${rel}`;
+    chunks.push(tarHeader(name, data.length), data);
+    const pad = (512 - (data.length % 512)) % 512;
+    if (pad) chunks.push(Buffer.alloc(pad, 0));
+    manifest.push({ rel, size: data.length, sha256: createHash('sha256').update(data).digest('hex').toUpperCase() });
+  }
+  chunks.push(Buffer.alloc(1024, 0)); // 两个零块结束
+
+  const buffer = gzipSync(Buffer.concat(chunks), { level: 9 });
+  return { buffer, entries: manifest, sha256: createHash('sha256').update(buffer).digest('hex').toUpperCase(), size: buffer.length };
 }
-chunks.push(Buffer.alloc(1024, 0)); // 两个零块结束
 
-const tar = Buffer.concat(chunks);
-const tgz = gzipSync(tar, { level: 9 });
-mkdirSync(outDir, { recursive: true });
-writeFileSync(outFile, tgz);
-
-const sha = createHash('sha256').update(tgz).digest('hex').toUpperCase();
-console.log(`已打包 ${entries.length} 个文件`);
-for (const m of manifest) console.log(`  ${String(m.size).padStart(8)}  ${m.rel}`);
-console.log(`\n输出：${outFile}`);
-console.log(`大小：${tgz.length} 字节`);
-console.log(`SHA256：${sha}`);
+const invokedPath = process.argv[1] === undefined ? undefined : resolve(process.argv[1]);
+if (invokedPath === fileURLToPath(import.meta.url)) {
+  const { buffer, entries, sha256, size } = buildTgz();
+  const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+  const outDir = join(root, 'artifacts');
+  const outFile = join(outDir, `${pkg.name}-${pkg.version}.tgz`);
+  mkdirSync(outDir, { recursive: true });
+  writeFileSync(outFile, buffer);
+  console.log(`已打包 ${entries.length} 个文件`);
+  for (const m of entries) console.log(`  ${String(m.size).padStart(8)}  ${m.rel}`);
+  console.log(`\n输出：${outFile}`);
+  console.log(`大小：${size} 字节`);
+  console.log(`SHA256：${sha256}`);
+}

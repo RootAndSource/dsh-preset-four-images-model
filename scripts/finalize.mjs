@@ -2,7 +2,7 @@
 /**
  * 四象模型·DSH智能体 bundle · 收尾（生成产物哈希）
  * 用法：node scripts/finalize.mjs
- * 动作：计算 dist-share/artifacts/ 下所有 .tgz 的大小与 SHA256，写入同目录 SHA256SUMS.txt（该文件自身除外）。
+ * 动作：计算本 bundle artifacts/ 下所有 .tgz 的大小与 SHA256，写入同目录 SHA256SUMS.txt（该文件自身除外）。
  * 说明：产物哈希单独成文件，避免与被哈希的文档互相引用形成循环。
  */
 
