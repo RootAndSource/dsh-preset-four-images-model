@@ -65,7 +65,7 @@ plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-fo
 
 - **六个维度、四阶段**：主体置首；主体与环境只出确认/约束，不出方案。
 - **10 个角色**：主体、环境 + 位/行/才/心 的 A（诊断）与 B（方案）各一个；每个角色独立子代理、独立上下文。
-- **工具**：`ask_user_question`（澄清）、`subagent_fast` / `subagent_pro`（派发）、`send_message`（追问）、`web_search` / `web_fetch`（环境时效信息）、上下文压缩。
+- **工具**：`ask_user_question`（澄清）、`subagent_fast` / `subagent_pro`（派发）、`web_search` / `web_fetch`（环境时效信息）、上下文压缩。缺字段时通过重新派发角色补齐。
 - **只读**：预设不提供文件读写、shell、代码执行工具；父智能体与子代理都没有落盘能力。
 - **模型分工**：诊断子代理默认用 `deepseek-v4-flash`，方案子代理默认用 `deepseek-v4-pro`；模型 id 可在部署侧改（见「常见问题」）。
 

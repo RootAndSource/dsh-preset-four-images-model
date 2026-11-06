@@ -54,7 +54,7 @@ plugin_manager({ action: "install_bundle", target: "<artifacts/dsh-preset-four-i
 
 ### 方式 C：放进已有 bundle 的 patch 层
 
-若你已有自己的 profile patch（`$DSH_HOME/profiles/<profile>/cordis.patch.yml`），把本包 `cordis.patch.yml` 中 `- insert:` 下面的整段贴进去也可以，效果相同——但要自己保证 `@deepseek-ai/dsh-agent-preset`、`@deepseek-ai/dsh-persona`、`@deepseek-ai/dsh-tool-subagent`、`@deepseek-ai/dsh-tool-ask-user`、`@deepseek-ai/dsh-tool-web`、`@deepseek-ai/dsh-tool-subagent-control`、`@deepseek-ai/dsh-time-context`、`@deepseek-ai/dsh-compaction-basic`、`@deepseek-ai/dsh-command-compact`、`@deepseek-ai/dsh-compaction-tool-result-pruner` 都在你的部署里存在。
+若你已有自己的 profile patch（`$DSH_HOME/profiles/<profile>/cordis.patch.yml`），把本包 `cordis.patch.yml` 中 `- insert:` 下面的整段贴进去也可以，效果相同——但要自己保证 `@deepseek-ai/dsh-agent-preset`、`@deepseek-ai/dsh-persona`、`@deepseek-ai/dsh-tool-subagent`、`@deepseek-ai/dsh-tool-ask-user`、`@deepseek-ai/dsh-tool-web`、`@deepseek-ai/dsh-time-context`、`@deepseek-ai/dsh-compaction-basic`、`@deepseek-ai/dsh-command-compact`、`@deepseek-ai/dsh-compaction-tool-result-pruner` 都在你的部署里存在。
 
 ## 三、安装后自检
 
@@ -96,8 +96,9 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 | `tool-web` | `@deepseek-ai/dsh-tool-web` | `web_search` / `web_fetch`，环境维度的时效信息 |
 | `subagent-fast` | `@deepseek-ai/dsh-tool-subagent` | `subagent_fast`，诊断角色（`deepseek-v4-flash`） |
 | `subagent-pro` | `@deepseek-ai/dsh-tool-subagent` | `subagent_pro`，方案角色（`deepseek-v4-pro`） |
-| `subagent-control` | `@deepseek-ai/dsh-tool-subagent-control` | `send_message`，向子代理追问缺失字段 |
 | `compaction`（group） | `@deepseek-ai/dsh-compaction-basic`、`@deepseek-ai/dsh-command-compact`、`@deepseek-ai/dsh-compaction-tool-result-pruner` | 四阶段长会话的上下文压缩 |
+
+**没有子代理回传通道**：子代理完成后通过运行时"完成通知"把最终 JSON 交回父智能体；若字段缺失，父智能体**重新派发该角色**补齐，不依赖子代理主动回传消息的工具。这样每个子代理只产生一次完成事件。
 
 **只读**：组合里**没有** `write` / `edit` / `pwsh` / `bash` / 文件写入类工具，父智能体与子代理都没有落盘能力。这是"只读"的构造性保证，不依赖任何逐条目工具过滤。
 
