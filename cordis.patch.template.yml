@@ -54,8 +54,6 @@
               agentOptions:
                 model: deepseek-v4-pro
               maxDepth: 1
-          - id: subagent-control
-            name: '@deepseek-ai/dsh-tool-subagent-control'
           - id: compaction
             name: cordis:group
             group: true
