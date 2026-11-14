@@ -60,6 +60,11 @@ const REQUIRED = [
   'INSTALL.md',
   'MANIFEST.md',
   'LICENSE',
+  'index.js',
+  'client.js',
+  'icon.png',
+  'locale/zh.json',
+  'locale/en.json',
   'prompts/parent.md',
   ...ROLE_ORDER.map((id) => `prompts/roles/${id}.md`),
 ];
@@ -202,6 +207,14 @@ if (pkg) {
   }
   /^\d+\.\d+\.\d+$/.test(pkg.version ?? '') ? ok('version 为语义化版本') : bad(`version 不是语义化版本：${pkg.version}`);
   pkg.engines?.dsh ? ok(`engines.dsh = ${pkg.engines.dsh}`) : bad('缺 engines.dsh');
+  for (const key of ['.', './client', './locale/*.json', './icon']) {
+    Object.hasOwn(pkg.exports ?? {}, key) ? ok(`exports 含 ${key}`) : bad(`exports 缺 ${key}`);
+  }
+  pkg.dsh?.client?.platform === 'web' ? ok('dsh.client.platform = web') : bad('dsh.client.platform 不是 web');
+  pkg.dsh?.client?.immediately === true ? ok('dsh.client.immediately = true') : bad('dsh.client.immediately 不是 true');
+  Array.isArray(pkg.dsh?.client?.inject) && pkg.dsh.client.inject.length > 0
+    ? ok(`dsh.client.inject 声明 ${pkg.dsh.client.inject.length} 项`)
+    : soft('dsh.client.inject 未声明');
   const entry = pkg.dsh?.bundle?.patch;
   if (!entry) bad('package.json 缺 dsh.bundle.patch（入口指向）');
   else {
@@ -212,6 +225,9 @@ if (pkg) {
   for (const f of pkg.files ?? []) {
     const target = f.replace(/\/$/, '');
     existsSync(join(root, target)) ? ok(`files 声明存在：${f}`) : bad(`files 声明的路径不存在：${f}`);
+  }
+  for (const f of ['index.js', 'client.js', 'icon.png', 'locale/']) {
+    (pkg.files ?? []).includes(f) ? ok(`files 含 ${f}`) : bad(`files 未声明 ${f}`);
   }
   (pkg.files ?? []).includes('prompts/') ? ok('files 声明含 prompts/') : bad('files 未声明 prompts/');
   (pkg.files ?? []).some((f) => f.startsWith('subagents')) ? bad('files 仍声明 subagents/') : ok('files 不再声明 subagents/');
@@ -236,6 +252,8 @@ if (patchText) {
   /id:\s*preset-four-images/.test(patchText) ? ok('Loader row id = preset-four-images') : bad('入口缺 row id');
   /name:\s*'@deepseek-ai\/dsh-agent-preset'/.test(patchText) ? ok('preset 行引用 @deepseek-ai/dsh-agent-preset') : bad('入口缺 preset 插件引用');
   /id:\s*four-images-model/.test(patchText) ? ok('preset id = four-images-model') : bad('入口缺 preset id');
+  /id:\s*preset-four-images-host/.test(patchText) ? ok('含空 Host 行 preset-four-images-host') : bad('入口缺空 Host 行（client 半不会被加载）');
+  /name:\s*dsh-preset-four-images-model/.test(patchText) ? ok('空 Host 行指向本包') : bad('空 Host 行未指向本包');
   /order:\s*10/.test(patchText) ? ok('order = 10') : soft('入口未设置 order');
   /name:\s*四象模型·DSH智能体/.test(patchText) ? ok('preset 显示名已显式声明') : bad('preset 缺显示名 name');
   /description:\s*\S+/.test(patchText) ? ok('preset 描述已显式声明') : bad('preset 缺 description');
@@ -275,6 +293,38 @@ if (patchText) {
     !/才能·心态维度/.test(persona) ? ok('persona 无「才能·心态维度」合并表述') : bad('persona 仍含合并维度表述');
     !/\[\[|\{\{/.test(persona) ? ok('persona 无未替换的模板占位符') : bad('persona 含未替换的模板占位符');
   }
+}
+
+// ---------- D2. Client 半与展示元数据 ----------
+if (isFile('client.js')) {
+  const client = read('client.js');
+  client.includes('window.__ModuleLoader__.load(') ? ok('client.js 使用 window.__ModuleLoader__') : bad('client.js 未使用 window.__ModuleLoader__');
+  /id:\s*'dsh-preset-four-images-model'/.test(client) ? ok('client module id = 包名') : bad('client module id 不是包名');
+  /const PRESET_ID = 'four-images-model'/.test(client) ? ok('client 声明 preset id') : bad('client 未声明 preset id');
+  for (const slot of ['four-images.page', 'four-images.home.card', 'four-images.home.action']) {
+    client.includes(`'${slot}'`) ? ok(`client 注册 ${slot}`) : bad(`client 未注册 ${slot}`);
+  }
+  client.includes('fourImagesNavigation') ? ok('client 使用 fourImagesNavigation 可选注入') : soft('client 未注册导航');
+  client.includes('uiWorkspace') && client.includes('startSession') ? ok('client 通过 uiWorkspace.startSession 启动') : bad('client 未调用 uiWorkspace.startSession');
+  client.includes('agentPreset: PRESET_ID') ? ok('startSession 传入 agentPreset') : bad('startSession 未传 agentPreset');
+  !client.includes('document.body') ? ok('client 不写 document.body') : bad('client 写 document.body');
+  !client.includes('iframe') ? ok('client 不使用 iframe') : bad('client 使用 iframe');
+  !/require\(\s*['"]@deepseek-ai\/dsh-client-/.test(client) ? ok('client 不 require Harness Client 包') : bad('client require 了 Harness Client 包');
+}
+for (const loc of ['locale/zh.json', 'locale/en.json']) {
+  if (!isFile(loc)) continue;
+  try {
+    const data = JSON.parse(read(loc));
+    data?.meta?.title && data?.meta?.description ? ok(`${loc} 含 meta.title/description`) : bad(`${loc} 缺 meta.title/description`);
+  } catch (e) {
+    bad(`${loc} 不是合法 JSON：${e.message}`);
+  }
+}
+if (isFile('icon.png')) {
+  const buf = readFileSync(join(root, 'icon.png'));
+  const isPng = buf.length > 8 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
+  isPng ? ok(`icon.png 为合法 PNG（${buf.length} 字节）`) : bad('icon.png 不是 PNG');
+  buf.length <= 256 * 1024 ? ok('icon.png ≤ 256 KiB') : bad(`icon.png 超过 256 KiB（${buf.length} 字节）`);
 }
 
 // ---------- E. 角色章节与契约 ----------

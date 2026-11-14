@@ -17,9 +17,9 @@ import { dirname, join, relative, resolve, sep } from 'node:path';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 /** 归档根级文件（顺序无关，打包前统一排序） */
-export const INCLUDE_TOP = ['package.json', 'cordis.patch.yml', 'cordis.patch.template.yml', 'README.md', 'INSTALL.md', 'MANIFEST.md', 'LICENSE'];
+export const INCLUDE_TOP = ['package.json', 'cordis.patch.yml', 'cordis.patch.template.yml', 'README.md', 'INSTALL.md', 'MANIFEST.md', 'LICENSE', 'index.js', 'client.js', 'icon.png'];
 /** 归档目录（递归包含） */
-export const INCLUDE_DIRS = ['prompts', 'scripts', 'assets'];
+export const INCLUDE_DIRS = ['prompts', 'scripts', 'assets', 'locale'];
 
 function walk(dir, acc = []) {
   for (const name of readdirSync(dir)) {

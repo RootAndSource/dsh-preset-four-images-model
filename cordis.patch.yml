@@ -855,3 +855,7 @@
                   thresholdChars: 8192
                   headChars: 4096
                   tailChars: 1024
+    # 空 Host 半：只为让本包拥有一条 enabled 的 Loader entry，使 dsh.client 声明
+    # 能被 Web 端的 Client 模块系统扫描；不注册服务、工具或会话插件，不改变 preset 组合。
+    - id: preset-four-images-host
+      name: dsh-preset-four-images-model

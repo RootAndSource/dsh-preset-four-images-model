@@ -19,12 +19,22 @@
   "engines": {
     "dsh": ">=0.2.1-rc.2"
   },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.png"
+  },
   "files": [
     "cordis.patch.yml",
     "cordis.patch.template.yml",
     "prompts/",
     "scripts/",
     "assets/",
+    "index.js",
+    "client.js",
+    "locale/",
+    "icon.png",
     "README.md",
     "INSTALL.md",
     "LICENSE",
@@ -42,6 +52,15 @@
     "manifestVersion": 1,
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-workspace"
+      ]
     }
   }
 }
