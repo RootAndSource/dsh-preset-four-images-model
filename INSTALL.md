@@ -74,6 +74,19 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 
 **真机验证建议**：新建会话 → 选 **四象模型·DSH智能体** → 用一个有主体、有环境、有流程的真实管理问题跑一遍，确认：① 阶段一能提问/产出主体与环境；② 四个诊断子代理各自返回结构化 JSON；③ 汇总里才与心是两节、主体在最前。本项目没有自动化端到端测试，这一步必须人工做。
 
+### 在四象工作台中接入（可选）
+
+四象工作台（`dsh-workbench-four-images-model`）是可选容器，本插件不依赖它。两者都安装并启用后：
+
+1. 刷新页面（或按提示重启 DSH）；
+2. 打开左侧「四象工作台」：插件页面出现 **四象分析** 导航；
+3. 首页出现 **四象模型 · 分析智能体** 卡片与 **开始四象分析** 主操作；
+4. 点击 **开始四象分析** 会新建一个绑定 preset `four-images-model` 的会话，直接输入管理问题即可。
+
+**插槽自检（不依赖点开页面）**：用 Client Slots 检查 `four-images.page`（key=`agent`）、`four-images.home.card`（id=`agent-card`）、`four-images.home.action`（id=`agent-action`）均有 occupant。停用/卸载工作台后这些入口自动移除，本预设照常可用。
+
+> 工作台与执行技能（skills）插件相互独立：本插件不读取、不写 skills 的状态；两者各自注册自己的页面与入口。
+
 ## 四、使用
 
 1. **新建会话**，在预设选择器里选 **四象模型·DSH智能体**（preset id `four-images-model`）。
@@ -100,11 +113,21 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 
 **没有子代理回传通道**：子代理完成后通过运行时"完成通知"把最终 JSON 交回父智能体；若字段缺失，父智能体**重新派发该角色**补齐，不依赖子代理主动回传消息的工具。这样每个子代理只产生一次完成事件。
 
+本 preset 另有一条空 Host 行 `preset-four-images-host`（指向本包，空实现），只为让 Web 端 Client 模块系统扫描到 `dsh.client` 声明并加载 client 半；它不注册任何工具或服务，也不进入 preset 组合。Client 半文件：`client.js`、`locale/*.json`、`icon.png`。
+
 **只读**：组合里**没有** `write` / `edit` / `pwsh` / `bash` / 文件写入类工具，父智能体与子代理都没有落盘能力。这是"只读"的构造性保证，不依赖任何逐条目工具过滤。
 
 **模型分工**：`subagent_fast` 绑定 `deepseek-v4-flash`，`subagent_pro` 绑定 `deepseek-v4-pro`。如果你的部署没有这两个模型 id，在 profile 的 `cordis.patch.yml` 里覆盖这两行（改 `agentOptions.model`，或删掉 `agentOptions` 让子代理继承父会话模型）。
 
 ## 六、升级说明（1.4.8 → 1.4.9）
+
+### 1.4.10 → 1.5.0（工作台接入）
+
+- 新增 Client 半：在工作台注册「四象分析」页面、首页卡片与「开始四象分析」动作；
+- 新增一条空 Host 行 `preset-four-images-host`（仅为加载 client 半，不进入 preset 组合）；
+- 包名、preset id `four-images-model`、Loader row id `preset-four-images`、`prompts/` 与六维方法论**全部未改**；
+- 工作台是可选容器：未安装/停用时入口自动消失，预设会话行为与 1.4.10 一致；与 skills 插件相互独立；
+- 版本号从 1.4.10 升到 1.5.0，需重新安装。
 
 - 1.4.9 起**不再依赖第三方名册插件**，也**不再随包提供名册目录**；如果你以前按旧文档把某个名册插件的目录指向本包的旧角色文件目录，请删除那份配置（该目录已不存在）。
 - 角色框架改为随 preset 一起分发（`prompts/` 为源码，`cordis.patch.yml` 由 `scripts/compose.mjs` 合成），**不需要手工复制任何文件**。
@@ -137,4 +160,5 @@ plugin_manager({ action: "remove_bundle", target: "dsh-preset-four-images-model"
 2. **不做市场数据检索的强保证**：环境维度的时效性事实依赖使用者所在部署的 Web 搜索能力；没有该能力时，环境因子需由用户提供，父智能体会把它们标为待验证。
 3. **不替代现场调研**：所有结论带证据与置信度要求；拿不到证据的结论会被写成"待验证"，这是设计意图，不是缺陷。
 4. **没有文件/命令能力**：本预设面向"分析和出方案"，不读写工作区、不执行命令；这是只读设计的一部分。
-5. **模型 id 绑定**：默认使用 `deepseek-v4-flash` / `deepseek-v4-pro`；部署侧模型 id 不同时需按第五节的说明覆盖。
+5. **模型 id 绑定**：默认使用 `deepseek-v4-flash` / `deepseek-v4-pro`；部署侧模型 id 不同时需按第五节的说明覆盖。DSH 0.2.2 的默认目录已使用 `deepseek-flash`。
+6. **工作台 0.x 契约**：工作台的导航服务与 5 个子插槽在 0.x 内尽量稳定；本插件用"可选注入 + 插槽存在才注册"接入，最坏情况是页面入口消失，不影响预设本身。

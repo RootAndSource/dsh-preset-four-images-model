@@ -69,19 +69,41 @@ plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-fo
 - **只读**：预设不提供文件读写、shell、代码执行工具；父智能体与子代理都没有落盘能力。
 - **模型分工**：诊断子代理默认用 `deepseek-v4-flash`，方案子代理默认用 `deepseek-v4-pro`；模型 id 可在部署侧改（见「常见问题」）。
 
-## 四、常见问题
+## 四、在四象工作台中接入（可选）
+
+本插件同时是 [四象工作台](https://github.com/RootAndSource/dsh-workbench-four-images-model) 的一个扩展：装上工作台后，左侧会出现「四象分析」页面，工作台首页会出现本插件的卡片与「开始四象分析」按钮。
+
+安装工作台（可选容器；本插件不依赖它，没装工作台时照常使用）：
+
+```
+plugin_manager({ action: "install_bundle", target: "dsh-workbench-four-images-model" })
+```
+
+刷新页面后：
+
+- 左侧「插件页面」分组下出现 **四象分析**；
+- 首页出现 **四象模型 · 分析智能体** 卡片与 **开始四象分析** 主操作；
+- 「四象分析」页面提供六维速览、推导顺序、提问示例、四阶段说明、报告读法与常见问题；
+- 点击 **开始四象分析** 会新建一个绑定本预设的会话，你直接输入管理问题即可。
+
+工作台未安装、被停用时，以上入口自动消失，本预设的会话行为完全不变。工作台与执行技能（skills）插件相互独立：本插件只注册自己的页面/卡片/入口，不读取、不写 skills 的状态。
+
+## 五、常见问题
 
 **需要先装第三方名册类插件吗？**
 不需要。1.4.9 起改用 DSH 官方 `subagent` 工具派发，零第三方依赖；角色框架随预设一起分发。
 
 **安装后预设选择器里没有卡片？**
-多半是没重启，或你打开的是**已有会话**。请重启 DSH 后**新建**一个会话；再确认 DSH 版本满足 `>= 0.2.1-rc.2`。
+多半是没重启，或你打开的是**已有会话**。请重启 DSH 后**新建**一个会话；再确认 DSH 版本满足 `>= 0.2.1-rc.2`。若使用工作台，请同时确认工作台与本插件都已安装、已启用。
 
 **环境维度不联网 / 搜索结果为空？**
 环境维度的时效性事实取决于部署的 Web 搜索能力（`@deepseek-ai/dsh-tool-web`）。没有配置搜索服务时，环境因子需要用户提供，父智能体会把它们标为待验证。
 
 **我的部署里没有 `deepseek-v4-flash` / `deepseek-v4-pro` 怎么办？**
-在 profile 的 `cordis.patch.yml` 里覆盖本预置的两个 `tool-subagent` 行，把 `agentOptions.model` 改成你的模型 id，或删掉 `agentOptions` 让子代理继承父会话模型。
+在 profile 的 `cordis.patch.yml` 里覆盖本预置的两个 `tool-subagent` 行，把 `agentOptions.model` 改成你的模型 id，或删掉 `agentOptions` 让子代理继承父会话模型。**DSH 0.2.2 的默认目录已使用 `deepseek-flash`（V4.1 Flash）**；若你的部署只有这个 id，可把两个子代理都指向 `deepseek-flash`，或在部署侧只覆盖 `subagent-fast` 一行。
+
+**工作台里没有「四象分析」页面 / 首页没有卡片？**
+确认工作台是 0.3.x、本插件是 1.5.x，且两者都已安装并启用；刷新页面或重启 DSH 后再看。旧版工作台没有这些扩展点。页面内显示「未检测到预设」时，按提示新建会话或重启 DSH。
 
 **升级到新版本怎么做？**
 npm 安装的话重新执行第 1 步的 `install_bundle`；tgz 安装的话下载新版本后同法覆盖。同名包只有在**版本号变化**时才会更新（同版本号内容变化需升版重打包，否则 pnpm 会判 `Already up to date`）。
@@ -94,6 +116,6 @@ npm 安装的话重新执行第 1 步的 `install_bundle`；tgz 安装的话下�
 plugin_manager({ action: "remove_bundle", target: "dsh-preset-four-images-model" })
 ```
 
-## 五、许可
+## 六、许可
 
 MIT，见 [LICENSE](./LICENSE)。

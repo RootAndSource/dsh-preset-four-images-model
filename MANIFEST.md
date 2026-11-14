@@ -1,18 +1,20 @@
-# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.4.10
+# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.5.0
 
 > **本包身份**：包名 `dsh-preset-four-images-model`，preset id `four-images-model`，Loader row id `preset-four-images`，名册条目 id 前缀 `four-images-`，品牌显示名 **`四象模型·DSH智能体`**。
 > **本版基线**：同族 `dsh-preset-four-images-model-1.3.5/`（**保留不动**）。**1.4.0 相对 1.3.5 只做一件事**：修正 1.3.5 中两处遗留命名瑕疵，并把修正结果做成机器可验断言——详见本文件末尾**第十五节**。运行标识符（包名 / preset id / row id / 10 个名册条目 id）**全部未改**，故本版是 1.3.5 的**直接升级**（装机覆盖，不新增卡片）。
 > **维度模型（现行）**：**六维** —— **主体（置首）** / 环境 / 地位 / 行为 / **才能** / **心态**。**才能与心态是两个独立维度**，从诊断、方案到汇总全程不得合并（详见第十三节）；**主体维度只做确认与画像、不出方案**（详见第十四节）。
 > **逐字节对齐**：打包前冻结全部文档、打包后不回写 bundle 内文件，保证"装机副本 = tgz 内容 = 磁盘 bundle"三者一致。
 > **版本纪律**：凡改动 bundle 内容（含文档措辞）都必须升 `version` 再打包装机；否则 pnpm 判定 `Already up to date`，装机副本不会更新。
-> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档** → **1.4.9 去除第三方名册库依赖，改为 DSH 官方 subagent 派发** → **1.4.10 去除子代理回传通道（本版）**。
+> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档** → **1.4.9 去除第三方名册库依赖，改为 DSH 官方 subagent 派发** → **1.4.10 去除子代理回传通道** → **1.5.0 接入四象工作台（页面 / 卡片 / 启动动作，本版）**。
 > **零旧标识符**：本包内**不出现**任何改名前的包名、preset id、loader row id 或名册条目 id。包内保留的"四象模型·DSH智能体"是**品牌与预设卡片标题**，与标识符改名无关。
 > **本版另有一项零残留要求**：包内（含条目首行注释、脚本注释、全部文档）**不出现维度拆分之前的侧别命名与自造的系统称谓**——修正清单以中性描述指代，不复现旧词字面值。
 
 
-## 零、当前版本速览（1.4.10）
+## 零、当前版本速览（1.5.0）
 
 > **现行架构**：`four-images-model` 是**零第三方依赖**的 preset：由 DSH 官方 `@deepseek-ai/dsh-tool-subagent` 派发（`subagent_fast` / `subagent_pro`），角色框架内联在 persona 中（源码在 `prompts/`，由 `scripts/compose.mjs` 合成 `cordis.patch.yml`）；**不再使用任何第三方名册插件与名册目录**。1.4.10 起**不再挂载子代理回传工具**：子代理结果只通过运行时完成通知返回，缺字段/回流改为重新派发角色。
+>
+> **1.5.0 新增 Client 半**：在四象工作台 0.3.x 注册「四象分析」页面、首页卡片与「开始四象分析」动作；新增一条空 Host 行 `preset-four-images-host` 用于加载 client 半。preset 组合、六维方法论、`prompts/` 均未改，工作台是可选容器，与 skills 插件相互独立。
 >
 > **阅读本文档的约定**：第一至二十二节是历史变更记录。其中提到的 `tools/*`、`dist-share/*`、母本 bundle 均**不在本仓库**（属当时工作区记录）；`四象模型·管理世界` / `四象模型·管理神器` 是 1.4.5/1.4.6 之前的品牌名，现行品牌为 `四象模型·DSH智能体`；各节"校验项数"是当时记录，当前基线以本节、第二十三节与 `FREEZE.md` 为准。
 
@@ -822,3 +824,41 @@ toolFilter:
 ### 升级动作
 
 `compose` → `checksums` → `pack` → `finalize` → `check` → `freeze-manifest` → `check`；递增 version 后重新安装。
+
+## 二十四、1.5.0 变更说明（接入四象工作台：页面 / 卡片 / 启动动作）
+
+### 变更动机
+
+1.4.10 只有 Host 半；四象工作台 0.3.0 已提供 `fourImagesNavigation` 服务与 5 个子插槽。本版按工作台的 `INTEGRATION.md` 把"四象分析"的说明、入口与启动动作放回本插件，工作台不新增任何业务文案或预设逻辑。
+
+### 变更内容
+
+| 项 | 1.4.10 | 1.5.0 |
+|---|---|---|
+| Client 半 | 无 | `client.js`（plain JS，`window.__ModuleLoader__`，module id = 包名） |
+| 工作台导航 | 无 | `fourImagesNavigation.add({ id: 'agent', label: { zh: '四象分析', en: 'Analysis' }, order: 10 })`，可选注入 |
+| 页面/卡片/动作 | 无 | `four-images.page`(key=`agent`) / `four-images.home.card`(id=`agent-card`) / `four-images.home.action`(id=`agent-action`) |
+| 启动动作 | 无 | `ctx.uiWorkspace.startSession(undefined, { agentPreset: 'four-images-model' })`；启动前用 `ctx.remote.agentPresets.list()` 检测预设，缺失/损坏时禁用按钮并提示 |
+| 展示元数据 | 无 | `exports` 增加 `.` / `./client` / `./locale/*.json` / `./icon`；`dsh.client`（platform web、immediately）；`locale/zh.json`、`locale/en.json`；`icon.png`（由 `assets/images/four-images-model-2026.png` 缩放为 1024×568、212 KB） |
+| Host 行 | 仅 `preset-four-images` | 增加空 Host 行 `preset-four-images-host`（指向本包；不注册服务/工具，不进入 preset 组合） |
+| preset 组合 / prompts | — | 未改；preset id、row id、六维方法论均未改 |
+| 与工作台/skills 的关系 | — | 工作台是可选容器；与 skills 插件相互独立，不读写对方状态 |
+
+### 兼容性影响
+
+- 运行标识符不变（包名 / preset id `four-images-model` / Loader row id `preset-four-images`）；
+- 工作台未安装或停用时，导航与插槽回调不执行，预设行为与 1.4.10 一致；
+- 仍要求 DSH `>= 0.2.1-rc.2`，仍为零第三方依赖；
+- 工作台 0.x 契约仍可能演进；本插件采用"可选注入 + 插槽存在才注册"，最坏情况是页面入口消失，不影响预设本身。
+
+### 验证结果
+
+- **静态**：`node --check client.js` 通过；`node scripts/compose.mjs --check` 通过；`npm pack --dry-run` 文件清单 30 个（含 `client.js`、`index.js`、`locale/*.json`、`icon.png`）；`node scripts/check.mjs` 通过（228 项）；打包确定性与产物重构建一致；
+- **插槽（真机，DSH 0.2.2-rc.1 + 工作台 0.3.0）**：`four-images.page` 有 key=`agent` occupant；`four-images.home.card` 有 id=`agent-card` occupant；`four-images.home.action` 有 id=`agent-action` occupant；
+- **工作台停用/恢复**：停用工作台后 `four-images.page` 变为 unavailable；重新启用后 `four-images.home.card` 的 `agent-card` occupant 自动恢复，证明可选注入与插槽生命周期正确；
+- **安装**：工作台 0.3.0 与 preset 1.5.0 均 `application: applied`；bundle 行 `preset-four-images` + `preset-four-images-host` 已启用；
+- **六维分析真机回归**（经工作台新建会话；测试时仅在部署侧把两个子代理临时覆盖为 `deepseek-flash`，发布物仍为 v4 id）：主会话 header `agentPreset: four-images-model`；8 个 turn 全部 `completed`；11 次工具调用（`subagent_fast`×6、`subagent_pro`×4、`ask_user_question`×1）；工具错误 0；阶段一（主体+环境确认/向用户澄清）正常；最终报告 13,825 字符，含六维分析总览表、逐维独立成节、优先级行动清单与待验证项，才能/心态分列。
+
+### 升级动作
+
+`compose` → `checksums` → `pack` → `finalize` → `check` → `freeze-manifest` → `check`；递增 version 后重新安装。工作台内容随本插件版本升级，不需要改工作台代码。
