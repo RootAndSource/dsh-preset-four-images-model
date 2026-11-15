@@ -827,16 +827,12 @@
             config:
               provider: spawn
               toolName: subagent_fast
-              agentOptions:
-                model: deepseek-v4-flash
               maxDepth: 1
           - id: subagent-pro
             name: '@deepseek-ai/dsh-tool-subagent'
             config:
               provider: spawn
               toolName: subagent_pro
-              agentOptions:
-                model: deepseek-v4-pro
               maxDepth: 1
           - id: compaction
             name: cordis:group

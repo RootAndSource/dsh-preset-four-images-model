@@ -266,8 +266,7 @@ if (patchText) {
   }
   /toolName:\s*subagent_fast/.test(patchText) ? ok('存在 subagent_fast 工具实例') : bad('缺 subagent_fast 工具实例');
   /toolName:\s*subagent_pro/.test(patchText) ? ok('存在 subagent_pro 工具实例') : bad('缺 subagent_pro 工具实例');
-  /model:\s*deepseek-v4-flash/.test(patchText) ? ok('subagent_fast 绑定 deepseek-v4-flash') : bad('subagent_fast 模型不是 deepseek-v4-flash');
-  /model:\s*deepseek-v4-pro/.test(patchText) ? ok('subagent_pro 绑定 deepseek-v4-pro') : bad('subagent_pro 模型不是 deepseek-v4-pro');
+  !/agentOptions:\s*\n\s*model:/.test(patchText) ? ok('子代理不写死 agentOptions.model（继承父会话模型）') : bad('preset 仍写死子代理 model id');
   (patchText.match(/maxDepth:\s*1/g) ?? []).length >= 2 ? ok('两个 subagent 实例均限制 maxDepth: 1') : bad('subagent 实例缺 maxDepth: 1');
   patchText.includes('tool-cordis') ? bad('preset 仍含无用的 tool-cordis') : ok('preset 不再含 tool-cordis');
   patchText.includes('tool-subagent-control') ? bad('preset 仍含 tool-subagent-control（子代理会主动回传消息）') : ok('preset 不含 tool-subagent-control');
