@@ -1,6 +1,6 @@
 {
   "name": "dsh-preset-four-images-model",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "四象模型·DSH智能体 — 主体/环境/地位/行为/才能/心态 六维（主体置首）（才能与心态各自独立、不合并）、A诊断+B方案两段式的管理问题分析与方案生成 Preset；零第三方依赖，使用 DSH 官方 subagent 派发",
   "keywords": [
     "dsh",
