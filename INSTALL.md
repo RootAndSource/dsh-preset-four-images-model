@@ -107,8 +107,8 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 | `time-context` | `@deepseek-ai/dsh-time-context` | 当前日期，供"截至某时点"的环境判断使用 |
 | `tool-ask-user` | `@deepseek-ai/dsh-tool-ask-user` | `ask_user_question`，阶段一向用户澄清 |
 | `tool-web` | `@deepseek-ai/dsh-tool-web` | `web_search` / `web_fetch`，环境维度的时效信息 |
-| `subagent-fast` | `@deepseek-ai/dsh-tool-subagent` | `subagent_fast`，诊断角色（`deepseek-v4-flash`） |
-| `subagent-pro` | `@deepseek-ai/dsh-tool-subagent` | `subagent_pro`，方案角色（`deepseek-v4-pro`） |
+| `subagent-fast` | `@deepseek-ai/dsh-tool-subagent` | `subagent_fast`，诊断角色（默认继承父会话模型） |
+| `subagent-pro` | `@deepseek-ai/dsh-tool-subagent` | `subagent_pro`，方案角色（默认继承父会话模型） |
 | `compaction`（group） | `@deepseek-ai/dsh-compaction-basic`、`@deepseek-ai/dsh-command-compact`、`@deepseek-ai/dsh-compaction-tool-result-pruner` | 四阶段长会话的上下文压缩 |
 
 **没有子代理回传通道**：子代理完成后通过运行时"完成通知"把最终 JSON 交回父智能体；若字段缺失，父智能体**重新派发该角色**补齐，不依赖子代理主动回传消息的工具。这样每个子代理只产生一次完成事件。
@@ -117,7 +117,7 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 
 **只读**：组合里**没有** `write` / `edit` / `pwsh` / `bash` / 文件写入类工具，父智能体与子代理都没有落盘能力。这是"只读"的构造性保证，不依赖任何逐条目工具过滤。
 
-**模型分工**：`subagent_fast` 绑定 `deepseek-v4-flash`，`subagent_pro` 绑定 `deepseek-v4-pro`。如果你的部署没有这两个模型 id，在 profile 的 `cordis.patch.yml` 里覆盖这两行（改 `agentOptions.model`，或删掉 `agentOptions` 让子代理继承父会话模型）。
+**模型分工**：`subagent_fast` 与 `subagent_pro` 默认都**继承父会话模型**，不写死模型 id。若要「诊断用快模型、方案用强模型」，在 profile 的 `cordis.patch.yml` 里给这两行加 `agentOptions.model`；删掉 `agentOptions` 即恢复继承。
 
 ## 六、升级说明（1.4.8 → 1.4.9）
 
@@ -128,6 +128,13 @@ plugin_manager({ action: "list_plugins", offset: 0, limit: 100 })
 - 包名、preset id `four-images-model`、Loader row id `preset-four-images`、`prompts/` 与六维方法论**全部未改**；
 - 工作台是可选容器：未安装/停用时入口自动消失，预设会话行为与 1.4.10 一致；与 skills 插件相互独立；
 - 版本号从 1.4.10 升到 1.5.0，需重新安装。
+
+### 1.5.0 → 1.5.1（子代理继承父会话模型）
+
+- 去掉两个 subagent 行写死的 `agentOptions.model`，子代理默认**继承父会话模型**；
+- 解决 DSH 0.2.2 下 `deepseek-v4-flash` 不存在、阶段二可能失败的问题；
+- 需要 fast/pro 分工时，在 profile 的 `cordis.patch.yml` 给两行加 `agentOptions.model`；
+- preset id、row id、`prompts/` 与六维方法论均未改。
 
 - 1.4.9 起**不再依赖第三方名册插件**，也**不再随包提供名册目录**；如果你以前按旧文档把某个名册插件的目录指向本包的旧角色文件目录，请删除那份配置（该目录已不存在）。
 - 角色框架改为随 preset 一起分发（`prompts/` 为源码，`cordis.patch.yml` 由 `scripts/compose.mjs` 合成），**不需要手工复制任何文件**。
@@ -160,5 +167,5 @@ plugin_manager({ action: "remove_bundle", target: "dsh-preset-four-images-model"
 2. **不做市场数据检索的强保证**：环境维度的时效性事实依赖使用者所在部署的 Web 搜索能力；没有该能力时，环境因子需由用户提供，父智能体会把它们标为待验证。
 3. **不替代现场调研**：所有结论带证据与置信度要求；拿不到证据的结论会被写成"待验证"，这是设计意图，不是缺陷。
 4. **没有文件/命令能力**：本预设面向"分析和出方案"，不读写工作区、不执行命令；这是只读设计的一部分。
-5. **模型 id 绑定**：默认使用 `deepseek-v4-flash` / `deepseek-v4-pro`；部署侧模型 id 不同时需按第五节的说明覆盖。DSH 0.2.2 的默认目录已使用 `deepseek-flash`。
+5. **模型路由**：子代理默认继承父会话模型，不绑定具体模型 id；如需快/强分工，按第五节的说明在部署侧覆盖。
 6. **工作台 0.x 契约**：工作台的导航服务与 5 个子插槽在 0.x 内尽量稳定；本插件用"可选注入 + 插槽存在才注册"接入，最坏情况是页面入口消失，不影响预设本身。

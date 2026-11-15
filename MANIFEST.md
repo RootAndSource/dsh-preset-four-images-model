@@ -1,20 +1,22 @@
-# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.5.0
+# 转换清单（MANIFEST）· dsh-preset-four-images-model · 1.5.1
 
 > **本包身份**：包名 `dsh-preset-four-images-model`，preset id `four-images-model`，Loader row id `preset-four-images`，名册条目 id 前缀 `four-images-`，品牌显示名 **`四象模型·DSH智能体`**。
 > **本版基线**：同族 `dsh-preset-four-images-model-1.3.5/`（**保留不动**）。**1.4.0 相对 1.3.5 只做一件事**：修正 1.3.5 中两处遗留命名瑕疵，并把修正结果做成机器可验断言——详见本文件末尾**第十五节**。运行标识符（包名 / preset id / row id / 10 个名册条目 id）**全部未改**，故本版是 1.3.5 的**直接升级**（装机覆盖，不新增卡片）。
 > **维度模型（现行）**：**六维** —— **主体（置首）** / 环境 / 地位 / 行为 / **才能** / **心态**。**才能与心态是两个独立维度**，从诊断、方案到汇总全程不得合并（详见第十三节）；**主体维度只做确认与画像、不出方案**（详见第十四节）。
 > **逐字节对齐**：打包前冻结全部文档、打包后不回写 bundle 内文件，保证"装机副本 = tgz 内容 = 磁盘 bundle"三者一致。
 > **版本纪律**：凡改动 bundle 内容（含文档措辞）都必须升 `version` 再打包装机；否则 pnpm 判定 `Already up to date`，装机副本不会更新。
-> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档** → **1.4.9 去除第三方名册库依赖，改为 DSH 官方 subagent 派发** → **1.4.10 去除子代理回传通道** → **1.5.0 接入四象工作台（页面 / 卡片 / 启动动作，本版）**。
+> **版本推进**：1.1.1 修复乱码角色文件 → 1.1.2 改用名册派发 → 1.1.5 消除文档时序差 → 1.1.6 为 4 个只读诊断角色启用 `toolFilter` → 1.1.7 把 shell 类工具纳入 deny → 1.1.8 分发源替换 → 1.1.9 包名 `present`→`preset` 更正 → 1.3.5 清理陈旧路径引用 → 1.3.5 才能与心态拆分独立（五维）→ 1.3.5 新增主体维度并置首（六维）→ **1.4.0 修正遗留命名** → **1.4.1 补齐包元数据与 LICENSE** → **1.4.3 面向使用者的 README** → **1.4.4 同步 README 并升版** → **1.4.5 README 标题改为「四象模型·DSH智能体」** → **1.4.6 显示名整体改为「四象模型·DSH智能体」** → **1.4.7 仓库地址与文档修正** → **1.4.8 npm 发布与安装文档** → **1.4.9 去除第三方名册库依赖，改为 DSH 官方 subagent 派发** → **1.4.10 去除子代理回传通道** → **1.5.0 接入四象工作台（页面 / 卡片 / 启动动作）** → **1.5.1 子代理继承父会话模型（本版）**。
 > **零旧标识符**：本包内**不出现**任何改名前的包名、preset id、loader row id 或名册条目 id。包内保留的"四象模型·DSH智能体"是**品牌与预设卡片标题**，与标识符改名无关。
 > **本版另有一项零残留要求**：包内（含条目首行注释、脚本注释、全部文档）**不出现维度拆分之前的侧别命名与自造的系统称谓**——修正清单以中性描述指代，不复现旧词字面值。
 
 
-## 零、当前版本速览（1.5.0）
+## 零、当前版本速览（1.5.1）
 
 > **现行架构**：`four-images-model` 是**零第三方依赖**的 preset：由 DSH 官方 `@deepseek-ai/dsh-tool-subagent` 派发（`subagent_fast` / `subagent_pro`），角色框架内联在 persona 中（源码在 `prompts/`，由 `scripts/compose.mjs` 合成 `cordis.patch.yml`）；**不再使用任何第三方名册插件与名册目录**。1.4.10 起**不再挂载子代理回传工具**：子代理结果只通过运行时完成通知返回，缺字段/回流改为重新派发角色。
 >
 > **1.5.0 新增 Client 半**：在四象工作台 0.3.x 注册「四象分析」页面、首页卡片与「开始四象分析」动作；新增一条空 Host 行 `preset-four-images-host` 用于加载 client 半。preset 组合、六维方法论、`prompts/` 均未改，工作台是可选容器，与 skills 插件相互独立。
+>
+> **1.5.1 模型路由**：去掉两个 subagent 行写死的 `agentOptions.model`，子代理默认**继承父会话模型**，避免 DSH 0.2.2 下 `deepseek-v4-flash` 不存在导致阶段二失败；需要 fast/pro 分工时在部署侧覆盖。
 >
 > **阅读本文档的约定**：第一至二十二节是历史变更记录。其中提到的 `tools/*`、`dist-share/*`、母本 bundle 均**不在本仓库**（属当时工作区记录）；`四象模型·管理世界` / `四象模型·管理神器` 是 1.4.5/1.4.6 之前的品牌名，现行品牌为 `四象模型·DSH智能体`；各节"校验项数"是当时记录，当前基线以本节、第二十三节与 `FREEZE.md` 为准。
 
@@ -862,3 +864,35 @@ toolFilter:
 ### 升级动作
 
 `compose` → `checksums` → `pack` → `finalize` → `check` → `freeze-manifest` → `check`；递增 version 后重新安装。工作台内容随本插件版本升级，不需要改工作台代码。
+
+## 二十五、1.5.1 变更说明（子代理继承父会话模型）
+
+### 变更动机
+
+1.5.0 把两个 subagent 行写死为 `deepseek-v4-flash` / `deepseek-v4-pro`。DSH 0.2.2-rc.1 的模型目录已使用 `deepseek-flash`（V4.1 Flash），账户侧 `list_subagent_models` 也只列出 `deepseek-flash`；`deepseek-v4-flash` 已不存在，阶段二诊断派发会失败。写死模型 id 也会把 preset 绑在特定 DSH 的模型命名上，跨版本易碎。
+
+### 变更内容
+
+| 项 | 1.5.0 | 1.5.1 |
+|---|---|---|
+| `subagent-fast` | `agentOptions.model: deepseek-v4-flash` | 无 `agentOptions`，继承父会话模型 |
+| `subagent-pro` | `agentOptions.model: deepseek-v4-pro` | 无 `agentOptions`，继承父会话模型 |
+| preset 组合 / `prompts/` / preset id / row id | — | 未改 |
+| Client 半 | — | 仅 FAQ 文案更新（“子代理用什么模型”） |
+| `scripts/check.mjs` | 断言 v4 id | 断言不写死 `agentOptions.model` |
+
+### 兼容性影响
+
+- 任何 DSH 版本都可运行：子代理跟随父会话模型，不再依赖具体模型 id；
+- 默认失去 fast/pro 模型分工；部署侧可按 README/INSTALL 给两行加 `agentOptions.model` 恢复；
+- 工作台接入、与 skills 插件相互独立的关系不变。
+
+### 验证结果
+
+- **静态**：`node --check client.js` 通过；`node scripts/compose.mjs --check` 通过；`npm pack --dry-run` 文件清单 30 个；`node scripts/check.mjs` 通过；打包确定性与产物重构建一致；
+- **真机六维回归（1.5.1 发布默认配置，无任何模型覆盖）**：主会话 header `agentPreset: four-images-model`；10 个 turn 全部 `completed`；10 次工具调用（`subagent_fast`×6、`subagent_pro`×4），**0 工具错误**；父会话与全部 10 个子会话的路由均为 `deepseek-account/deepseek-flash`，直接验证“继承父会话模型”生效；阶段一（主体+环境确认/向用户澄清）正常；最终报告 17,891 字符，含六维分析总览表、逐维独立成节、优先级行动清单与待验证项；环境子会话实际使用 `web_search`/`web_fetch`；
+- **插槽与安装**：1.5.1 本地目录安装后 `four-images.page`(key=`agent`)、`four-images.home.card`(id=`agent-card`)、`four-images.home.action`(id=`agent-action`) 均 active；最终 tgz 安装后再次确认。
+
+### 升级动作
+
+`compose` → `checksums` → `pack` → `finalize` → `check` → `freeze-manifest` → `check`；递增 version 后重新安装。

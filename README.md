@@ -67,7 +67,7 @@ plugin_manager({ action: "install_bundle", target: "<下载目录>\dsh-preset-fo
 - **10 个角色**：主体、环境 + 位/行/才/心 的 A（诊断）与 B（方案）各一个；每个角色独立子代理、独立上下文。
 - **工具**：`ask_user_question`（澄清）、`subagent_fast` / `subagent_pro`（派发）、`web_search` / `web_fetch`（环境时效信息）、上下文压缩。缺字段时通过重新派发角色补齐。
 - **只读**：预设不提供文件读写、shell、代码执行工具；父智能体与子代理都没有落盘能力。
-- **模型分工**：诊断子代理默认用 `deepseek-v4-flash`，方案子代理默认用 `deepseek-v4-pro`；模型 id 可在部署侧改（见「常见问题」）。
+- **模型分工**：诊断子代理 `subagent_fast`、方案子代理 `subagent_pro` 默认都**继承父会话模型**，不写死模型 id；如需「诊断用快模型、方案用强模型」的分工，在部署侧给这两行加 `agentOptions.model`（见「常见问题」）。
 
 ## 四、在四象工作台中接入（可选）
 
@@ -99,8 +99,11 @@ plugin_manager({ action: "install_bundle", target: "dsh-workbench-four-images-mo
 **环境维度不联网 / 搜索结果为空？**
 环境维度的时效性事实取决于部署的 Web 搜索能力（`@deepseek-ai/dsh-tool-web`）。没有配置搜索服务时，环境因子需要用户提供，父智能体会把它们标为待验证。
 
-**我的部署里没有 `deepseek-v4-flash` / `deepseek-v4-pro` 怎么办？**
-在 profile 的 `cordis.patch.yml` 里覆盖本预置的两个 `tool-subagent` 行，把 `agentOptions.model` 改成你的模型 id，或删掉 `agentOptions` 让子代理继承父会话模型。**DSH 0.2.2 的默认目录已使用 `deepseek-flash`（V4.1 Flash）**；若你的部署只有这个 id，可把两个子代理都指向 `deepseek-flash`，或在部署侧只覆盖 `subagent-fast` 一行。
+**子代理用什么模型？想恢复快/强分工怎么办？**
+默认继承父会话模型，不写死模型 id，因此会跟随你当前会话的模型。若要「诊断用快模型、方案用强模型」的分工，在 profile 的 `cordis.patch.yml` 里给两个 `tool-subagent` 行加 `agentOptions.model`（例如诊断 `deepseek-flash`、方案 `deepseek-v4-pro`）；删掉 `agentOptions` 即恢复继承。
+
+**从 1.5.0 升级到 1.5.1 需要做什么？**
+重新安装 1.5.1 并新建会话即可。1.5.1 去掉了对 `deepseek-v4-flash` / `deepseek-v4-pro` 的硬编码，改为继承父会话模型；旧会话保持原有插件组合。
 
 **工作台里没有「四象分析」页面 / 首页没有卡片？**
 确认工作台是 0.3.x、本插件是 1.5.x，且两者都已安装并启用；刷新页面或重启 DSH 后再看。旧版工作台没有这些扩展点。页面内显示「未检测到预设」时，按提示新建会话或重启 DSH。
